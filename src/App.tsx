@@ -106,8 +106,8 @@ export default function App() {
                 <Library size={24} />
               </div>
               <div>
-                <h1 className="font-semibold text-lg leading-tight tracking-tight text-neutral-900">Scholar</h1>
-                <p className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Academic Archive</p>
+                <h1 className="font-semibold text-lg leading-tight tracking-tight text-neutral-900">uunknown</h1>
+                <p className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Exam Archive</p>
               </div>
             </div>
             
@@ -173,7 +173,7 @@ export default function App() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-neutral-900 transition-colors" size={20} />
           <input 
             type="text" 
-            placeholder="Search archives by title, description, or tag..."
+            placeholder="ค้นหาข้อสอบโดยพิมพ์ ชื่อ, tag, ฯลฯ"
             className="w-full bg-white border border-neutral-300 rounded-xl py-4 pl-12 pr-4 text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-all shadow-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -193,18 +193,18 @@ export default function App() {
                   onChange={(e) => setShowDifficulty(e.target.checked)} 
                   className="rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900 w-4 h-4 cursor-pointer"
                 />
-                Show Difficulty
+                เเสดงความยาก
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="bg-white border border-neutral-200 text-neutral-700 text-sm rounded-lg focus:ring-neutral-900 focus:border-neutral-900 block w-full sm:w-auto p-2 outline-none shadow-sm font-medium"
               >
-                <option value="default">Sort by: Default</option>
-                <option value="year-desc">Year: Newest First</option>
-                <option value="year-asc">Year: Oldest First</option>
-                <option value="difficulty-desc">Difficulty: Hardest First</option>
-                <option value="difficulty-asc">Difficulty: Easiest First</option>
+                <option value="default">เรียงปกติ</option>
+                <option value="year-desc">Newest</option>
+                <option value="year-asc">Oldest</option>
+                <option value="difficulty-desc">Hardest</option>
+                <option value="difficulty-asc">Easiest</option>
               </select>
             </div>
           </div>
@@ -259,7 +259,7 @@ export default function App() {
                     <div className="shrink-0 pl-2 flex items-center gap-4">
                       {!item.isOfficialSource && (
                         <div className="flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold border border-amber-200 shrink-0" title="Unofficial Source">
-                          <span>Unofficial</span>
+                          <span>ข้อสอบจากการจำ</span>
                         </div>
                       )}
                       <span className="text-[10px] font-mono text-neutral-500 bg-neutral-100 px-2 py-1 rounded-md shrink-0 border border-neutral-200">
@@ -304,7 +304,7 @@ export default function App() {
              <div className="bg-neutral-200 text-neutral-500 p-2 rounded-md">
                 <Library size={20} />
               </div>
-              <p className="text-neutral-500 text-sm">2026 Scholar Academic Archive. All rights reserved.</p>
+              <p className="text-neutral-500 text-sm">เว็บไซต์รวมข้อสอบของพรรค uunknown</p>
           </div>
         </div>
       </footer>
