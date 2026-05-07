@@ -12,7 +12,7 @@ export const mockArchives: ArchiveItem[] = [
     tags: ['number-theory', 'primes', 'proof'],
     difficulty: 5,
     yearPublished: 2023,
-    downloadUrl: 'https://drive.google.com/file/d/1b9y8o5YHv3t_3cWLZfymyQ52_bwWkI1L/view?usp=sharing' // Example Google Drive direct download link
+    downloadUrl: 'https://drive.google.com/uc?export=download&id=1b9y8o5YHv3t_3cWLZfymyQ52_bwWkI1L' // Example Google Drive direct download link
   },
   {
     id: 'arch-b001',
