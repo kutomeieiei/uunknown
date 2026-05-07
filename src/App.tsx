@@ -4,26 +4,37 @@
  */
 
 import React, { useState } from 'react';
-import { Search, Dna, FlaskConical, Atom, Calculator, Cpu, Library, HardDriveDownload, BookOpen } from 'lucide-react';
+import { Search, Dna, FlaskConical, Atom, Calculator, Cpu, Library, HardDriveDownload, BookOpen, BadgeCheck, XCircle } from 'lucide-react';
 import { mockArchives } from './data/mockArchives';
 import { ArchiveItem, ArchiveCategory } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 
-const CategoryIcon = ({ category, className, size = 24 }: { category: ArchiveCategory | string, className?: string, size?: number }) => {
+const TypeIcon = ({ type, className, size = 24 }: { type: string, className?: string, size?: number }) => {
   // NOTE: If you decide to use Google Drive image URLs, you must use the `uc?export=view` format.
   // Instead of the share link: https://drive.google.com/file/d/FILE_ID/view
   // Use this formatted URL:     https://drive.google.com/uc?export=view&id=FILE_ID
   const getIconPath = () => {
-    switch (category) {
-      case 'Mathematics': return 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=128&q=80';
-      case 'Biology': return 'https://images.unsplash.com/photo-1530973428-5bf2db2e4d71?auto=format&fit=crop&w=128&q=80';
-      case 'Chemistry': return 'https://images.unsplash.com/photo-1603126854154-8430e1ccbb81?auto=format&fit=crop&w=128&q=80';
-      case 'Physics': return 'https://images.unsplash.com/photo-1636466497217-26c8c6096057?auto=format&fit=crop&w=128&q=80';
+    switch (type.toLowerCase()) {
+      case 'posn': return 'https://drive.google.com/thumbnail?id=1bYZ03JwDRCJODvH9CIPRMazYqItUBrtv&sz=w400';
       default: return 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=128&q=80';
     }
   };
 
-  return <img src={getIconPath()} alt={`${category} icon`} className={`${className || ''} rounded-md object-cover`} style={{ width: size, height: size }} />;
+  return (
+    <img 
+      src={getIconPath()} 
+      alt={`${type} icon`} 
+      className={`${className || ''} rounded-md object-cover`} 
+      style={{ width: size, height: size }} 
+      referrerPolicy="no-referrer"
+      onError={(e) => {
+        // Fallback to default if image fails to load (often due to Google Drive permissions)
+        const target = e.target as HTMLImageElement;
+        target.onerror = null; // Prevent infinite loop
+        target.src = 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=128&q=80';
+      }}
+    />
+  );
 };
 
 const DifficultyBar = ({ level }: { level: number }) => {
@@ -225,11 +236,13 @@ export default function App() {
                     className="bg-white border border-neutral-200 rounded-xl overflow-hidden hover:border-neutral-400 transition-colors shadow-sm focus-within:ring-2 focus-within:ring-neutral-900 flex items-center p-3 gap-4"
                   >
                     <div className="shrink-0 hidden sm:block">
-                      <CategoryIcon category={item.category} size={48} />
+                      <TypeIcon type={item.type} size={48} />
                     </div>
                     
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-base font-medium text-neutral-900 truncate">{item.title}</h4>
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-base font-medium text-neutral-900 truncate">{item.title}</h4>
+                      </div>
                       <div className="flex items-center gap-3 mt-1">
                         <span className="text-xs font-mono text-neutral-500 uppercase tracking-wider shrink-0">{item.category}</span>
                         <div className="flex flex-wrap gap-1.5 shrink-0">
@@ -244,8 +257,13 @@ export default function App() {
                     </div>
 
                     <div className="shrink-0 pl-2 flex items-center gap-4">
+                      {!item.isOfficialSource && (
+                        <div className="flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold border border-amber-200 shrink-0" title="Unofficial Source">
+                          <span>Unofficial</span>
+                        </div>
+                      )}
                       <span className="text-[10px] font-mono text-neutral-500 bg-neutral-100 px-2 py-1 rounded-md shrink-0 border border-neutral-200">
-                        Est. {item.yearPublished}
+                        {item.yearPublished}
                       </span>
                       {item.downloadUrl ? (
                         <a
@@ -286,12 +304,7 @@ export default function App() {
              <div className="bg-neutral-200 text-neutral-500 p-2 rounded-md">
                 <Library size={20} />
               </div>
-              <p className="text-neutral-500 text-sm">© 2026 Scholar Academic Archive. All rights reserved.</p>
-          </div>
-          <div className="flex gap-6 text-sm font-medium text-neutral-500">
-            <a href="#" className="hover:text-neutral-900 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-neutral-900 transition-colors">Terms</a>
-            <a href="#" className="hover:text-neutral-900 transition-colors">API Keys</a>
+              <p className="text-neutral-500 text-sm">2026 Scholar Academic Archive. All rights reserved.</p>
           </div>
         </div>
       </footer>

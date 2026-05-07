@@ -4,12 +4,11 @@ export interface ArchiveItem {
   id: string;
   title: string;
   description: string;
-  category: ArchiveCategory;
-  size: string;
-  dateAdded: string;
-  downloads: number;
+  category: string;
+  type: string;
   tags: string[];
   difficulty: number;
   yearPublished: number;
   downloadUrl?: string; // Optional URL for external downloads like Google Drive
+  isOfficialSource: boolean; // Indicates if it's from an official source
 }
