@@ -3,7 +3,7 @@ import { ArchiveItem } from '../types';
 export const mockArchives: ArchiveItem[] = [
   {
     id: 'posn1-math68',
-    title: 'ข้อสอบคัดเลือกเข้าค่าย 1 สอวนวิชาคณิตศาสตร์ปี 2568',
+    title: 'ข้อสอบคัดค่าย 1 สอวนคณิตศาสตร์ปี 2568',
     description: '',
     category: 'Mathematics',
     type: 'posn',
@@ -15,7 +15,7 @@ export const mockArchives: ArchiveItem[] = [
   },
   {
     id: 'posn1-physics67',
-    title: 'ข้อสอบคัดเลือกเข้าค่าย 1 สอวนวิชาฟิสิกส์ปี 2567',
+    title: 'ข้อสอบคัดค่าย 1 สอวนฟิสิกส์ปี 2567',
     description: '',
     category: 'Physics',
     type: 'posn',
@@ -27,7 +27,7 @@ export const mockArchives: ArchiveItem[] = [
   },
   {
     id: 'posn1-physics66',
-    title: 'ข้อสอบคัดเลือกเข้าค่าย 1 สอวนวิชาฟิสิกส์ปี 2566',
+    title: 'ข้อสอบคัดค่าย 1 สอวนฟิสิกส์ปี 2566',
     description: '',
     category: 'Physics',
     type: 'posn',
