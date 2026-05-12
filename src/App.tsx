@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Search, Dna, FlaskConical, Atom, Calculator, Cpu, Library, HardDriveDownload, BookOpen, BadgeCheck, XCircle, ChevronDown, ExternalLink, ArrowLeft, Sun, Moon } from 'lucide-react';
+import { Search, Dna, FlaskConical, Atom, Calculator, Cpu, Library, HardDriveDownload, BookOpen, BadgeCheck, XCircle, ChevronDown, ExternalLink, ArrowLeft, Sun, Moon, Menu, X } from 'lucide-react';
 import { mockArchives } from './data/mockArchives';
 import { externalLinks } from './data/externalLinks';
 import { ArchiveItem, ArchiveCategory } from './types';
@@ -73,6 +73,7 @@ const handleMockDownload = (item: ArchiveItem) => {
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'home' | 'exams' | 'about' | 'more-exams'>('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ArchiveCategory | 'All'>('All');
   const [sortBy, setSortBy] = useState<'default' | 'year-desc' | 'year-asc' | 'difficulty-desc' | 'difficulty-asc'>('default');
@@ -127,29 +128,80 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
-              <div className="bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 p-2 rounded-lg transition-colors">
+              <div className="bg-neutral-900 dark:bg-neutral-800 text-white dark:text-neutral-300 p-2 rounded-lg transition-colors">
                 <Library size={24} />
               </div>
               <div>
-                <h1 className="font-semibold text-lg leading-tight tracking-tight text-neutral-900 dark:text-neutral-100 transition-colors">uunknown</h1>
-                <p className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest transition-colors">Exam Archive</p>
+                <h1 className="font-semibold text-lg leading-tight tracking-tight text-neutral-900 dark:text-neutral-300 transition-colors">uunknown</h1>
+                <p className="text-[10px] font-mono text-neutral-500 dark:text-neutral-500 uppercase tracking-widest transition-colors">Exam Archive</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
-              <button onClick={() => setCurrentView('home')} className={`text-sm font-medium transition-colors ${currentView === 'home' ? 'text-neutral-900 dark:text-neutral-100' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'}`}>Home</button>
-              <button onClick={() => setCurrentView('exams')} className={`text-sm font-medium transition-colors ${currentView === 'exams' ? 'text-neutral-900 dark:text-neutral-100' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'}`}>Exams</button>
-              <button onClick={() => setCurrentView('about')} className={`text-sm font-medium transition-colors ${currentView === 'about' ? 'text-neutral-900 dark:text-neutral-100' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'}`}>About Me</button>
+            <div className="hidden sm:flex items-center gap-4">
+              <button onClick={() => setCurrentView('home')} className={`text-sm font-medium transition-colors ${currentView === 'home' ? 'text-neutral-900 dark:text-neutral-300' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-300'}`}>Home</button>
+              <button onClick={() => setCurrentView('exams')} className={`text-sm font-medium transition-colors ${currentView === 'exams' ? 'text-neutral-900 dark:text-neutral-300' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-300'}`}>Exams</button>
+              <button onClick={() => setCurrentView('about')} className={`text-sm font-medium transition-colors ${currentView === 'about' ? 'text-neutral-900 dark:text-neutral-300' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-300'}`}>About Me</button>
               <button 
                 onClick={() => setIsDarkMode(!isDarkMode)} 
-                className="p-1.5 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 ml-2"
+                className="p-1.5 text-neutral-500 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-300 transition-colors rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 ml-2"
                 aria-label="Toggle dark mode"
               >
                 {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
               </button>
             </div>
+
+            {/* Mobile Nav Toggle */}
+            <div className="flex sm:hidden items-center gap-2">
+              <button 
+                onClick={() => setIsDarkMode(!isDarkMode)} 
+                className="p-1.5 text-neutral-500 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-300 transition-colors rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                aria-label="Toggle dark mode"
+              >
+                {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+              <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+                className="p-1.5 text-neutral-500 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-300 transition-colors rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                aria-label="Toggle mobile menu"
+              >
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Mobile Nav Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="sm:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 overflow-hidden"
+            >
+              <div className="px-4 py-4 flex flex-col gap-4">
+                <button 
+                  onClick={() => { setCurrentView('home'); setIsMobileMenuOpen(false); }} 
+                  className={`text-left text-base font-medium transition-colors ${currentView === 'home' ? 'text-neutral-900 dark:text-neutral-300' : 'text-neutral-500 dark:text-neutral-500'}`}
+                >
+                  Home
+                </button>
+                <button 
+                  onClick={() => { setCurrentView('exams'); setIsMobileMenuOpen(false); }} 
+                  className={`text-left text-base font-medium transition-colors ${currentView === 'exams' ? 'text-neutral-900 dark:text-neutral-300' : 'text-neutral-500 dark:text-neutral-500'}`}
+                >
+                  Exams
+                </button>
+                <button 
+                  onClick={() => { setCurrentView('about'); setIsMobileMenuOpen(false); }} 
+                  className={`text-left text-base font-medium transition-colors ${currentView === 'about' ? 'text-neutral-900 dark:text-neutral-300' : 'text-neutral-500 dark:text-neutral-500'}`}
+                >
+                  About Me
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Main Content */}
@@ -164,15 +216,15 @@ export default function App() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="py-20 flex flex-col items-center text-center justify-center min-h-[60vh] max-w-3xl mx-auto w-full gap-8"
             >
-              <h2 className="text-4xl sm:text-5xl font-bold text-neutral-900 dark:text-neutral-100 tracking-tight leading-tight transition-colors">
-                ยินดีต้อนรับสู่ <br/> <span className="text-neutral-500 dark:text-neutral-400">Exam Archive</span>
+              <h2 className="text-4xl sm:text-5xl font-bold text-neutral-900 dark:text-neutral-300 tracking-tight leading-tight transition-colors">
+                ยินดีต้อนรับสู่ <br/> <span className="text-neutral-500 dark:text-neutral-500">Exam Archive</span>
               </h2>
-              <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-xl transition-colors">
+              <p className="text-lg text-neutral-600 dark:text-neutral-500 max-w-xl transition-colors">
                 ค้นหาและดาวน์โหลดข้อสอบเก่าและข้อสอบแข่งขันต่างๆ ได้ที่นี่ เราได้รวบรวมข้อสอบที่น่าสนใจมาไว้ให้คุณแล้ว
               </p>
               <button 
                 onClick={() => setCurrentView('exams')}
-                className="mt-4 px-8 py-4 bg-neutral-900 dark:bg-neutral-200 text-white dark:text-neutral-900 rounded-xl font-medium hover:bg-neutral-800 dark:hover:bg-neutral-300 transition-colors shadow-lg shadow-neutral-900/20 dark:shadow-neutral-200/10 active:scale-95"
+                className="mt-4 px-8 py-4 bg-neutral-900 dark:bg-neutral-800 text-white dark:text-neutral-300 rounded-xl font-medium hover:bg-neutral-800 dark:hover:bg-neutral-700 transition-colors shadow-lg shadow-neutral-900/20 dark:shadow-black/10 active:scale-95"
               >
                 เริ่มค้นหาข้อสอบ
               </button>
@@ -188,8 +240,8 @@ export default function App() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="max-w-3xl mx-auto py-12 px-4 sm:px-0 flex flex-col gap-8 w-full"
             >
-            <h2 className="text-3xl font-semibold text-neutral-900 dark:text-neutral-100 tracking-tight transition-colors">About Me</h2>
-            <div className="prose prose-neutral dark:prose-invert max-w-none text-neutral-700 dark:text-neutral-300 transition-colors">
+            <h2 className="text-3xl font-semibold text-neutral-900 dark:text-neutral-300 tracking-tight transition-colors">About Me</h2>
+            <div className="prose prose-neutral dark:prose-invert max-w-none text-neutral-700 dark:text-neutral-400 transition-colors">
               <p className="text-lg">
                 ok doraymifasol
               </p>
@@ -220,21 +272,21 @@ export default function App() {
             >
         {/* Controls */}
         <section className="flex flex-col sm:flex-row justify-between gap-4">
-          <div className="flex gap-2 bg-neutral-200/50 dark:bg-neutral-800/50 p-1 rounded-lg w-full sm:w-auto overflow-x-auto transition-colors">
+          <div className="flex gap-2 bg-neutral-200/50 dark:bg-neutral-900 p-1 rounded-lg w-full sm:w-auto overflow-x-auto transition-colors">
             {categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 className={`relative px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                   selectedCategory === cat 
-                    ? 'text-neutral-900 dark:text-neutral-900' 
-                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-700/50'
+                    ? 'text-neutral-900 dark:text-neutral-200' 
+                    : 'text-neutral-600 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800'
                 }`}
               >
                 {selectedCategory === cat && (
                   <motion.div
                     layoutId="active-category"
-                    className="absolute inset-0 bg-white dark:bg-neutral-100 rounded-md shadow-sm"
+                    className="absolute inset-0 bg-white dark:bg-neutral-800 rounded-md shadow-sm"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
@@ -247,18 +299,18 @@ export default function App() {
         {/* Search */}
         <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
           <div className="relative group flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500 group-focus-within:text-neutral-900 dark:group-focus-within:text-neutral-200 transition-colors" size={20} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-600 group-focus-within:text-neutral-900 dark:group-focus-within:text-neutral-400 transition-colors" size={20} />
             <input 
               type="text" 
               placeholder="ค้นหาข้อสอบโดยพิมพ์ ชื่อ, tag, ฯลฯ"
-              className="w-full bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 rounded-xl py-3 pl-12 pr-4 text-neutral-900 dark:text-neutral-200 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-neutral-300 focus:border-transparent transition-all shadow-sm"
+              className="w-full bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 rounded-xl py-3 pl-12 pr-4 text-neutral-900 dark:text-neutral-300 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-neutral-700 focus:border-transparent transition-all shadow-sm"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <button 
             onClick={() => setCurrentView('more-exams')}
-            className="px-4 py-2 text-sm bg-neutral-900 dark:bg-neutral-200 text-white dark:text-neutral-900 rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-300 transition-colors flex items-center justify-center gap-2 shadow-sm shrink-0 active:scale-95"
+            className="px-4 py-2 text-sm bg-neutral-900 dark:bg-neutral-800 text-white dark:text-neutral-300 rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-700 transition-colors flex items-center justify-center gap-2 shadow-sm shrink-0 active:scale-95"
           >
             ข้อสอบเพิ่มเติม
           </button>
@@ -267,15 +319,15 @@ export default function App() {
         {/* Archive Grid/List */}
         <section className="pb-24">
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 border-b border-neutral-200 dark:border-neutral-800 pb-4 transition-colors">
-            <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 transition-colors">ผลลัพธ์ ({filteredArchives.length} รายการ)</h3>
+            <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-300 transition-colors">ผลลัพธ์ ({filteredArchives.length} รายการ)</h3>
             
             <div className="flex flex-wrap gap-4 items-center">
-              <label className="flex items-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-300 cursor-pointer select-none transition-colors">
+              <label className="flex items-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-500 cursor-pointer select-none transition-colors">
                 <input 
                   type="checkbox" 
                   checked={showDifficulty} 
                   onChange={(e) => setShowDifficulty(e.target.checked)} 
-                  className="rounded border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200 focus:ring-neutral-900 dark:focus:ring-neutral-300 w-4 h-4 cursor-pointer"
+                  className="rounded border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-400 focus:ring-neutral-900 dark:focus:ring-neutral-600 w-4 h-4 cursor-pointer"
                 />
                 เเสดงความยาก
               </label>
@@ -283,7 +335,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:border-neutral-300 dark:hover:border-neutral-700 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-neutral-300 flex items-center justify-between gap-2 w-full sm:w-36 px-3 py-2 shadow-sm font-medium transition-all"
+                  className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-700 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-neutral-700 flex items-center justify-between gap-2 w-full sm:w-36 px-3 py-2 shadow-sm font-medium transition-all"
                 >
                   <span>{sortOptions.find((o) => o.id === sortBy)?.label || 'เรียงปกติ'}</span>
                   <ChevronDown size={16} className={`transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`} />
@@ -298,7 +350,7 @@ export default function App() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-full sm:w-48 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-lg z-20 py-1.5 overflow-hidden origin-top-right transition-colors"
+                        className="absolute right-0 mt-2 w-full sm:w-48 bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-lg z-20 py-1.5 overflow-hidden origin-top-right transition-colors"
                       >
                         {sortOptions.map((option) => (
                           <button
@@ -309,8 +361,8 @@ export default function App() {
                             }}
                             className={`w-full text-left px-4 py-2 text-sm transition-colors ${
                               sortBy === option.id
-                                ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium'
-                                : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 hover:text-neutral-900 dark:hover:text-neutral-100'
+                                ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-300 font-medium'
+                                : 'text-neutral-600 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 hover:text-neutral-900 dark:hover:text-neutral-300'
                             }`}
                           >
                             {option.label}
@@ -325,12 +377,12 @@ export default function App() {
           </div>
 
           {filteredArchives.length === 0 ? (
-            <div className="text-center py-24 bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 border-dashed rounded-2xl flex flex-col items-center justify-center gap-4 text-neutral-500 dark:text-neutral-400 transition-colors">
+            <div className="text-center py-24 bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 border-dashed rounded-2xl flex flex-col items-center justify-center gap-4 text-neutral-500 dark:text-neutral-500 transition-colors">
               <Search size={48} className="text-neutral-300 dark:text-neutral-700" />
               <p className="text-lg">No archives found matching your criteria.</p>
               <button 
                 onClick={() => {setSearchTerm(''); setSelectedCategory('All');}}
-                className="text-neutral-900 dark:text-neutral-100 font-medium hover:underline focus:outline-none"
+                className="text-neutral-900 dark:text-neutral-300 font-medium hover:underline focus:outline-none"
               >
                 Clear filters
               </button>
@@ -355,7 +407,7 @@ export default function App() {
                       y: { type: 'spring', bounce: 0, duration: 0.4 },
                       scale: { duration: 0.2 }
                     }}
-                    className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors shadow-sm focus-within:ring-2 focus-within:ring-neutral-900 dark:focus-within:ring-neutral-300 p-4 sm:p-3 flex flex-col sm:flex-row sm:items-center gap-4"
+                    className="bg-white dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800/50 rounded-xl overflow-hidden hover:border-neutral-400 dark:hover:border-neutral-700 transition-colors shadow-sm focus-within:ring-2 focus-within:ring-neutral-900 dark:focus-within:ring-neutral-700 p-4 sm:p-3 flex flex-col sm:flex-row sm:items-center gap-4"
                   >
                     <div className="flex items-start gap-3 flex-1 min-w-0">
                       <div className="shrink-0 sm:block">
@@ -369,10 +421,10 @@ export default function App() {
                       
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <h4 className="text-base sm:text-lg font-medium text-neutral-900 dark:text-neutral-100 leading-snug truncate sm:whitespace-normal line-clamp-2 transition-colors">{item.title}</h4>
+                          <h4 className="text-base sm:text-lg font-medium text-neutral-900 dark:text-neutral-300 leading-snug truncate sm:whitespace-normal line-clamp-2 transition-colors">{item.title}</h4>
                         </div>
                         <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1 sm:mt-1.5">
-                          <span className="text-[10px] sm:text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-wider shrink-0 transition-colors">{item.category}</span>
+                          <span className="text-[10px] sm:text-xs font-mono text-neutral-500 dark:text-neutral-500 uppercase tracking-wider shrink-0 transition-colors">{item.category}</span>
                           <div className="flex flex-wrap gap-1.5 shrink-0">
                             {item.tags.map(tag => (
                               <span key={tag} className="px-1.5 py-0.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 text-[10px] font-mono rounded-md border border-neutral-200/60 dark:border-neutral-700/60 transition-colors">
@@ -387,14 +439,14 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="shrink-0 flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto pt-3 sm:pt-0 mt-1 sm:mt-0 border-t sm:border-t-0 border-neutral-100 dark:border-neutral-800 transition-colors">
+                    <div className="shrink-0 flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto pt-3 sm:pt-0 mt-1 sm:mt-0 border-t sm:border-t-0 border-neutral-100 dark:border-neutral-800/50 transition-colors">
                       <div className="flex items-center gap-2">
                         {!item.isOfficialSource && (
-                          <div className="flex items-center gap-1 text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-amber-950/50 px-2 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold border border-amber-200 dark:border-amber-900 shrink-0 transition-colors" title="Unofficial Source">
+                          <div className="flex items-center gap-1 text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-amber-950/30 px-2 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold border border-amber-200 dark:border-amber-900/50 shrink-0 transition-colors" title="Unofficial Source">
                             <span>ข้อสอบจากการจำ</span>
                           </div>
                         )}
-                        <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded-md shrink-0 border border-neutral-200 dark:border-neutral-700 transition-colors">
+                        <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-800/50 px-2 py-1 rounded-md shrink-0 border border-neutral-200 dark:border-neutral-700/50 transition-colors">
                           {item.yearPublished}
                         </span>
                         <div className="sm:hidden">
@@ -407,7 +459,7 @@ export default function App() {
                             href={item.solutionUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-100 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer shrink-0"
+                            className="flex items-center justify-center bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700/50 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-300 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer shrink-0"
                             title="View Solution"
                           >
                             <span>เฉลย</span>
@@ -418,7 +470,7 @@ export default function App() {
                             href={item.downloadUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center bg-neutral-900 dark:bg-neutral-200 hover:bg-neutral-800 dark:hover:bg-neutral-300 text-white dark:text-neutral-900 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer shrink-0"
+                            className="flex items-center justify-center bg-neutral-900 dark:bg-neutral-800 hover:bg-neutral-800 dark:hover:bg-neutral-700 text-white dark:text-neutral-300 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer shrink-0"
                             title="Download External Link"
                           >
                             <span>Download</span>
@@ -426,7 +478,7 @@ export default function App() {
                         ) : (
                           <button
                             onClick={() => handleMockDownload(item)}
-                            className="flex items-center justify-center bg-neutral-900 dark:bg-neutral-200 hover:bg-neutral-800 dark:hover:bg-neutral-300 text-white dark:text-neutral-900 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer shrink-0"
+                            className="flex items-center justify-center bg-neutral-900 dark:bg-neutral-800 hover:bg-neutral-800 dark:hover:bg-neutral-700 text-white dark:text-neutral-300 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer shrink-0"
                             title="Download Mock"
                           >
                             <span>Download</span>
@@ -454,7 +506,7 @@ export default function App() {
               <div className="w-full flex justify-start -mt-8 sm:-mt-12">
                 <button 
                   onClick={() => setCurrentView('exams')}
-                  className="px-4 py-2 text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-lg font-medium transition-colors active:scale-[0.98] flex items-center justify-center gap-2"
+                  className="px-4 py-2 text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-300 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-lg font-medium transition-colors active:scale-[0.98] flex items-center justify-center gap-2"
                 >
                   <ArrowLeft size={16} />
                   กลับไปหน้าข้อสอบหลัก
@@ -462,8 +514,8 @@ export default function App() {
               </div>
 
               <div className="text-center">
-                <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2 transition-colors">ข้อสอบเพิ่มเติม</h2>
-                <p className="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto transition-colors">
+                <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-300 mb-2 transition-colors">ข้อสอบเพิ่มเติม</h2>
+                <p className="text-neutral-600 dark:text-neutral-500 max-w-xl mx-auto transition-colors">
                   หน้านี้จะรวมข้อสอบที่มาจากแหล่งอื่นๆ หรือกำลังอยู่ในช่วงรวบรวม
                 </p>
               </div>
@@ -471,25 +523,25 @@ export default function App() {
               <div className="w-full flex justify-center">
                 <div className="flex flex-col gap-4 w-full">
                   {externalLinks.map((link) => (
-                    <div key={link.id} className="w-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 sm:p-6 shadow-sm hover:border-neutral-400 dark:hover:border-neutral-500 transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4 text-left group">
+                    <div key={link.id} className="w-full bg-white dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800/50 rounded-2xl p-5 sm:p-6 shadow-sm hover:border-neutral-400 dark:hover:border-neutral-700 transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4 text-left group">
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                          <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 line-clamp-1 transition-colors">{link.title}</h3>
+                          <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-300 line-clamp-1 transition-colors">{link.title}</h3>
                           <div className="flex flex-wrap items-center gap-1.5">
                             {link.subjects && link.subjects.map(sub => (
-                              <span key={sub} className="text-[10px] font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors">
+                              <span key={sub} className="text-[10px] font-medium bg-neutral-100 dark:bg-neutral-800/50 text-neutral-600 dark:text-neutral-400 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors">
                                 {sub}
                               </span>
                             ))}
                           </div>
                         </div>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400 transition-colors">{link.description}</p>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-500 transition-colors">{link.description}</p>
                       </div>
                       <a
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-xl text-sm font-medium transition-colors sm:shrink-0"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-300 rounded-xl text-sm font-medium transition-colors sm:shrink-0"
                       >
                         <span>ไปที่เว็บไซต์</span>
                         <ExternalLink size={16} />
