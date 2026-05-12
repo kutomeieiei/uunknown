@@ -11,6 +11,7 @@ export const mockArchives: ArchiveItem[] = [
     difficulty: 4,
     yearPublished: 2568,
     downloadUrl: 'https://drive.google.com/uc?export=download&id=1KthxPXdSF0fwMeXuyFm9BuTF_ijt40J1',
+    solutionUrl: 'https://drive.google.com/uc?export=view&id=1KthxPXdSF0fwMeXuyFm9BuTF_ijt40J1',
     isOfficialSource: true
   },
   {
