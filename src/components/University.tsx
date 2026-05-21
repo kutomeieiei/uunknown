@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ExternalLink, BookOpen, GraduationCap, Building2, X, Info, MapPin, Search } from "lucide-react";
+import { ExternalLink, BookOpen, GraduationCap, Building2, X, Info, MapPin, Search, ArrowLeft } from "lucide-react";
 
 interface UniversityItem {
   id: string;
@@ -90,20 +90,149 @@ export function University() {
     },
   ];
 
-  // Prevent scroll when modal is open
-  React.useEffect(() => {
-    if (selectedUni) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => { document.body.style.overflow = 'unset'; }
-  }, [selectedUni]);
-
   const filteredUnis = unis.filter(uni => 
     uni.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     uni.nameThai.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  if (selectedUni) {
+    return (
+      <motion.section
+        key="university-detail"
+        initial={{ opacity: 0, y: 15, filter: "blur(5px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        exit={{ opacity: 0, y: -15, filter: "blur(5px)" }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="py-12 flex flex-col justify-start min-h-[50vh] w-full gap-8 max-w-5xl mx-auto px-4 sm:px-6 relative z-10"
+      >
+        {/* Back Button */}
+        <div>
+          <button
+            onClick={() => setSelectedUni(null)}
+            className="group inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-neutral-600 dark:text-neutral-400 hover:text-red-500 dark:hover:text-red-400 bg-neutral-100 hover:bg-neutral-200/60 dark:bg-neutral-900/40 dark:hover:bg-neutral-800/80 rounded-xl transition-all"
+          >
+            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
+            <span>ย้อนกลับไปหน่วยงานมหาวิทยาลัย</span>
+          </button>
+        </div>
+
+        {/* Hero Banner section */}
+        <div className="py-6 flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 relative overflow-hidden">
+          {/* Subtle Ambient Glow */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-red-500/5 via-orange-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+          {selectedUni.logoUrl ? (
+            <div className="w-24 h-24 sm:w-32 sm:h-32 bg-white dark:bg-neutral-950 rounded-2xl p-3 shadow-sm border border-neutral-200/40 dark:border-neutral-800/40 flex items-center justify-center shrink-0">
+              <img src={selectedUni.logoUrl} alt={`${selectedUni.name} logo`} className="w-full h-full object-contain" />
+            </div>
+          ) : (
+            <div className={`w-24 h-24 sm:w-32 sm:h-32 rounded-2xl flex items-center justify-center shadow-sm shrink-0 border ${selectedUni.color}`}>
+              <div className="scale-150 text-current">{selectedUni.icon}</div>
+            </div>
+          )}
+
+          <div className="flex-1 text-center md:text-left min-w-0">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white leading-tight">
+                {selectedUni.nameThai}
+              </h2>
+              <img src="https://flagcdn.com/th.svg" alt="Thailand" className="w-6 h-auto rounded-[2px] shadow-sm shrink-0" />
+            </div>
+            <p className="text-sm sm:text-base text-neutral-500 dark:text-neutral-400 mb-4 font-medium transition-colors">
+              {selectedUni.name}
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
+              <span className="flex items-center gap-1.5 font-semibold transition-colors">
+                <MapPin size={16} className="text-red-500" />
+                {selectedUni.location}
+              </span>
+              <span className="flex items-center gap-1.5 font-semibold transition-colors">
+                <GraduationCap size={16} className="text-orange-500" />
+                สถาบันอุดมศึกษาไทย
+              </span>
+            </div>
+          </div>
+
+          <div className="shrink-0 w-full md:w-auto flex justify-center mt-2 md:mt-0">
+            <a
+              href={selectedUni.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl text-sm font-semibold shadow-md hover:scale-[1.02] active:scale-95 transition-all"
+            >
+              <span>ไปที่เว็บไซต์มหาวิทยาลัย</span>
+              <ExternalLink size={16} />
+            </a>
+          </div>
+        </div>
+
+        {/* Details Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 mt-4">
+          <div className="lg:col-span-2 flex flex-col gap-10">
+            {/* Description Card */}
+            <div className="transition-colors">
+              <h3 className="text-2xl font-bold flex items-center gap-2 mb-4 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-neutral-900 dark:via-white to-neutral-500 drop-shadow-sm">
+                รายละเอียดเกี่ยวกับมหาวิทยาลัย
+              </h3>
+              <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed transition-colors">
+                {selectedUni.description}
+              </p>
+            </div>
+
+            {/* Admissions */}
+            <div className="transition-colors">
+              <h3 className="text-2xl font-bold flex items-center gap-2 mb-4 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-neutral-900 dark:via-white to-neutral-500 drop-shadow-sm">
+                รอบวิธียื่นรับเข้าศึกษาที่มีเปิดรับสมัคร
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-6">
+                {selectedUni.admissionMethods.map((method, index) => (
+                  <div key={index} className="flex flex-col gap-2 transition-colors">
+                    <span className="text-xs font-semibold text-red-500 dark:text-red-400 uppercase tracking-widest">
+                      {method.name.split(" ")[1] || "Admission"}
+                    </span>
+                    <h4 className="font-semibold text-lg text-neutral-900 dark:text-white leading-snug">
+                      {method.name}
+                    </h4>
+                    <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                      {method.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            {/* Criteria Column */}
+            <div className="transition-colors flex flex-col">
+              <h3 className="text-2xl font-bold flex items-center gap-2 mb-4 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-neutral-900 dark:via-white to-neutral-500 drop-shadow-sm">
+                เกณฑ์การยื่นสมัครคัดเลือก (ตัวอย่าง)
+              </h3>
+              
+              <div className="flex flex-col gap-6 mt-6">
+                {selectedUni.faculties.map((faculty, fIndex) => (
+                  <div key={fIndex} className="flex flex-col gap-3 transition-colors">
+                    <h4 className="font-semibold text-lg text-neutral-900 dark:text-white flex items-center gap-1.5">
+                      คณะ{faculty.facultyName}
+                    </h4>
+                    
+                    <div className="flex flex-wrap gap-1.5">
+                      {faculty.scoreCriteria.map((score, sIndex) => (
+                        <span key={sIndex} className="text-xs font-semibold text-neutral-700 dark:text-neutral-300 bg-neutral-100/50 dark:bg-neutral-900/30 px-3 py-1 rounded-full transition-colors border border-neutral-200/40 dark:border-neutral-800/40">
+                          {score}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+    );
+  }
 
   return (
     <>
@@ -190,94 +319,6 @@ export function University() {
           )))}
         </div>
       </motion.section>
-
-      {/* University Info Modal */}
-      <AnimatePresence>
-        {selectedUni && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedUni(null)}
-              className="fixed inset-0 bg-neutral-900/40 dark:bg-black/60 backdrop-blur-sm z-40 transition-opacity"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed inset-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 z-50 w-auto sm:w-[500px] h-auto max-h-[calc(100vh-2rem)] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-[2rem] shadow-xl overflow-hidden flex flex-col"
-            >
-              <div className="px-6 py-5 border-b border-neutral-100 dark:border-neutral-800 flex flex-row items-center gap-4 relative bg-white dark:bg-neutral-900 shrink-0">
-                <button
-                  onClick={() => setSelectedUni(null)}
-                  className="absolute top-1/2 -translate-y-1/2 right-4 p-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-500 dark:text-neutral-400 rounded-full transition-colors"
-                  aria-label="Close modal"
-                >
-                  <X size={18} />
-                </button>
-                
-                {selectedUni.logoUrl ? (
-                  <div className="w-16 h-16 bg-white dark:bg-neutral-900 rounded-xl p-1 shadow-sm border border-neutral-200 dark:border-neutral-800 flex items-center justify-center shrink-0">
-                    <img src={selectedUni.logoUrl} alt={`${selectedUni.name} logo`} className="w-full h-full object-contain" />
-                  </div>
-                ) : (
-                  <div className={`w-16 h-16 rounded-xl flex items-center justify-center shadow-sm shrink-0 border ${selectedUni.color}`}>
-                    <div className="text-current">{selectedUni.icon}</div>
-                  </div>
-                )}
-                
-                <div className="flex-1 min-w-0 pr-10">
-                  <h3 className={`font-bold leading-tight flex flex-wrap items-center gap-2 text-left text-neutral-900 dark:text-neutral-100 line-clamp-2 ${selectedUni.name.length > 35 ? 'text-sm sm:text-base' : 'text-base sm:text-lg'}`}>
-                    {selectedUni.name} <img src="https://flagcdn.com/th.svg" alt="Thailand" className="inline-block w-5 h-auto rounded-[2px]" />
-                  </h3>
-                </div>
-              </div>
-              
-              <div className="p-8 overflow-y-auto flex-1 flex flex-col gap-8">
-                <div>
-                  <h4 className="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-3">รายละเอียด</h4>
-                  <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed text-sm sm:text-base">
-                    {selectedUni.description}
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-3">วิธีการรับเข้าศึกษา</h4>
-                  <div className="flex flex-col gap-3">
-                    {selectedUni.admissionMethods.map((method, index) => (
-                      <div key={index} className="bg-neutral-50 dark:bg-neutral-800/30 p-4 rounded-xl border border-neutral-100 dark:border-neutral-800/60">
-                        <h5 className="font-semibold text-neutral-900 dark:text-neutral-200 mb-1.5">{method.name}</h5>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400">{method.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-4">คะแนนที่ใช้ยื่นในแต่ละคณะ (ตัวอย่าง)</h4>
-                  <div className="flex flex-col gap-4">
-                    {selectedUni.faculties.map((faculty, fIndex) => (
-                      <div key={fIndex} className="bg-neutral-50 dark:bg-neutral-800/30 p-4 rounded-xl border border-neutral-100 dark:border-neutral-800/60">
-                        <h5 className="font-semibold text-neutral-900 dark:text-neutral-200 mb-3">{faculty.facultyName}</h5>
-                        <ul className="flex flex-col gap-2">
-                          {faculty.scoreCriteria.map((score, sIndex) => (
-                            <li key={sIndex} className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-400">
-                              <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600 mt-1.5 shrink-0" />
-                              <span>{score}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </>
   );
 }
