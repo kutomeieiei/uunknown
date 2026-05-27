@@ -21,6 +21,8 @@ import {
   ArrowLeft,
   MoreVertical,
   Mic,
+  Copyright,
+  Instagram,
 } from "lucide-react";
 import { mockArchives } from "./data/mockArchives";
 import { externalLinks } from "./data/externalLinks";
@@ -117,6 +119,50 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [sourceType, setSourceType] = useState<"All" | "Official" | "Unofficial">("All");
   const [selectedExamType, setSelectedExamType] = useState<string>("All");
+  const [portfolioSearch, setPortfolioSearch] = useState("");
+  const [selectedPortfolioTag, setSelectedPortfolioTag] = useState<string>("All");
+
+  const allPortfolioTags = ["All", ...Array.from(new Set(portfolioLinks.flatMap(link => link.tags)))];
+
+  const additionalPortfolioSources = [
+    {
+      id: "1",
+      title: "TCAS Portfolio",
+      url: "https://www.mytcas.com/",
+      description: "รวมตัวอย่างพอร์ตโฟลิโอสำหรับยื่น TCAS",
+      tags: ["TCAS", "Official"]
+    },
+    {
+      id: "2",
+      title: "Dek-D Portfolio",
+      url: "https://www.dek-d.com/portfolio/",
+      description: "แหล่งรวมพอร์ตโฟลิโอและบทความแนะนำการทำพอร์ตจากเว็บไซต์ Dek-D",
+      tags: ["Guide", "Examples"]
+    },
+    {
+      id: "3",
+      title: "Pinterest - Portfolio Design",
+      url: "https://www.pinterest.com/search/pins/?q=portfolio%20design%20university",
+      description: "รวมไอเดียการออกแบบพอร์ตโฟลิโอให้สวยงามและน่าสนใจ",
+      tags: ["Design", "Ideas"]
+    }
+  ];
+
+  const filteredPortfolioLinks = portfolioLinks.filter((link) => {
+    const matchesSearch =
+      portfolioSearch === "" ||
+      (link.ownerName && link.ownerName.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
+      (link.title && link.title.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
+      (link.targetFacultyAndUni && link.targetFacultyAndUni.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
+      (link.description && link.description.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
+      link.tags.some(tag => tag.toLowerCase().includes(portfolioSearch.toLowerCase()));
+
+    const matchesTag =
+      selectedPortfolioTag === "All" ||
+      link.tags.includes(selectedPortfolioTag);
+
+    return matchesSearch && matchesTag;
+  });
 
   const categories = [
     "All",
@@ -426,15 +472,11 @@ export default function App() {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="flex flex-col gap-8 w-full max-w-4xl mx-auto py-8 relative"
             >
-              {/* Background Ambient Glows */}
-              <div className="absolute -top-16 -left-16 w-80 h-80 bg-gradient-to-tr from-red-500/10 via-rose-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute top-1/2 -right-16 w-80 h-80 bg-gradient-to-br from-amber-500/5 via-orange-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
-
               {/* Title Section matching Home View */}
               <div className="text-center px-4 max-w-3xl mx-auto flex flex-col items-center gap-4 mb-4 relative z-10">
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight transition-colors text-neutral-900 dark:text-white">
                   ค้นหา{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-500 to-amber-500 dark:from-red-400 dark:via-rose-400 dark:to-orange-400 drop-shadow-md">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 dark:from-red-400 dark:to-red-650 drop-shadow-md">
                     แหล่งข้อสอบเก่า
                   </span>
                 </h2>
@@ -444,13 +486,13 @@ export default function App() {
               </div>
 
               {/* Controls & Filters with Custom gradient border highlight */}
-              <section className="flex flex-col gap-5 bg-white/80 dark:bg-neutral-900/60 backdrop-blur-md p-6 rounded-2xl border-t-2 border-t-red-500 border-x border-b border-neutral-200/60 dark:border-neutral-800/60 shadow-lg shadow-neutral-100/10 dark:shadow-none transition-colors relative z-10">
+              <section className="flex flex-col gap-5 p-2 transition-colors relative z-10 w-full mb-8">
                 {/* 1. Category Filter */}
                 <div className="flex flex-col gap-2">
                   <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider ml-1">
                     วิชา / หมวดหมู่
                   </span>
-                  <div className="flex gap-2 p-1 bg-neutral-200/40 dark:bg-neutral-900/80 rounded-xl w-full overflow-x-auto transition-colors scrollbar-none">
+                  <div className="flex gap-2 p-1 rounded-xl w-full overflow-x-auto transition-colors scrollbar-none">
                     {categories.map((cat) => (
                       <button
                         key={cat}
@@ -464,7 +506,7 @@ export default function App() {
                         {selectedCategory === cat && (
                           <motion.div
                             layoutId="active-category"
-                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -485,7 +527,7 @@ export default function App() {
                     <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider ml-1">
                       สนามสอบ
                     </span>
-                    <div className="flex gap-2 p-1 bg-neutral-200/40 dark:bg-neutral-900/80 rounded-xl overflow-x-auto transition-colors scrollbar-none">
+                    <div className="flex gap-2 p-1 rounded-xl overflow-x-auto transition-colors scrollbar-none">
                       {examTypes.map((et) => (
                         <button
                           key={et}
@@ -499,7 +541,7 @@ export default function App() {
                           {selectedExamType === et && (
                             <motion.div
                               layoutId="active-exam-type"
-                              className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg shadow-sm"
+                              className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
                               transition={{
                                 type: "spring",
                                 bounce: 0.2,
@@ -518,7 +560,7 @@ export default function App() {
                     <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider ml-1">
                       ผู้จัดทำ / แหล่งที่มา
                     </span>
-                    <div className="flex bg-neutral-200/45 dark:bg-neutral-900/80 p-1 rounded-xl transition-colors relative">
+                    <div className="flex p-1 rounded-xl transition-colors relative">
                       <button
                         onClick={() => setSourceType("All")}
                         className={`relative flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap text-center ${
@@ -530,7 +572,7 @@ export default function App() {
                         {sourceType === "All" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -551,7 +593,7 @@ export default function App() {
                         {sourceType === "Official" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -572,7 +614,7 @@ export default function App() {
                         {sourceType === "Unofficial" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -599,7 +641,7 @@ export default function App() {
                     <input
                       type="text"
                       placeholder="ค้นหาแหล่งข้อสอบโดยพิมพ์ ชื่อรายชื่อ, รายวิชา..."
-                      className="w-full bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 rounded-xl py-3 pl-12 pr-4 text-neutral-900 dark:text-neutral-300 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-red-500/50 dark:focus:ring-red-600/50 focus:border-transparent transition-all shadow-sm"
+                      className="w-full bg-transparent border border-neutral-300 dark:border-neutral-700 rounded-xl py-3 pl-12 pr-4 text-neutral-900 dark:text-neutral-300 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 dark:focus:ring-red-600/50 focus:border-red-500 transition-all"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -638,28 +680,19 @@ export default function App() {
                   </div>
                 ) : (
                   <motion.div layout className="flex flex-col gap-4 w-full">
-                    <AnimatePresence mode="popLayout">
+                    <AnimatePresence initial={false}>
                       {filteredExternalLinks.map((link) => (
                         <motion.div
                           key={link.id}
-                          layoutId={link.id}
                           layout="position"
-                          initial={{ opacity: 0, y: 15, scale: 0.98 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{
-                            opacity: 0,
-                            scale: 0.95,
-                            transition: { duration: 0.15 },
-                          }}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
                           transition={{
-                            layout: {
-                              type: "spring",
-                              bounce: 0.2,
-                              duration: 0.6,
-                            },
+                            layout: { type: "spring", bounce: 0, duration: 0.4 },
                             opacity: { duration: 0.2 },
                             y: { type: "spring", bounce: 0, duration: 0.4 },
-                            scale: { duration: 0.2 },
+                            scale: { duration: 0.2 }
                           }}
                           className="w-full bg-white dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800/50 rounded-2xl p-5 sm:p-6 shadow-sm hover:border-red-500/40 dark:hover:border-red-600/45 hover:shadow-lg hover:shadow-red-500/5 transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4 text-left group"
                         >
@@ -709,7 +742,6 @@ export default function App() {
                             className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-gradient-to-r hover:from-red-500 hover:to-rose-600 text-neutral-900 dark:text-neutral-300 hover:text-white dark:hover:text-white rounded-xl text-sm font-medium transition-all sm:shrink-0 hover:-translate-y-0.5 active:scale-95 border border-neutral-200/50 dark:border-neutral-700/50 hover:border-transparent dark:hover:border-transparent group-hover:shadow-md group-hover:shadow-red-500/10"
                           >
                             <span>ไปที่เว็บไซต์</span>
-                            <ExternalLink size={16} />
                           </a>
                         </motion.div>
                       ))}
@@ -727,41 +759,164 @@ export default function App() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="py-12 flex flex-col items-center justify-center min-h-[50vh] w-full gap-8 max-w-3xl mx-auto relative"
+              className="py-12 flex flex-col items-center justify-start min-h-[60vh] w-full gap-10 max-w-4xl mx-auto relative"
             >
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-300 mb-2 transition-colors">
-                  Portfolio
+              <div className="text-center px-4">
+                <h2 className="text-3xl sm:text-4xl font-black text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">
+                  Student Portfolios
                 </h2>
-                <p className="text-neutral-600 dark:text-neutral-500 max-w-xl mx-auto transition-colors">
-                  รวบรวมลิงก์ผลงานและ Portfolio สำหรับยื่นมหาวิทยาลัย
+                <div className="h-1 w-12 bg-red-500 mx-auto rounded-full mb-4" />
+                <p className="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto transition-colors">
+                  รวบรวมเล่มผลงานสะสม (Portfolio) ที่ผ่านการคัดเลือกเข้าศึกษาจริงในมหาวิทยาลัยต่างๆ เพื่อเป็นประทีปส่องทางและแรงบันดาลใจแด่น้องๆ รุ่นต่อไป
                 </p>
               </div>
 
-              <div className="w-full flex justify-center">
+              {/* ค้นหาและตัวกรอง */}
+              <div className="w-full max-w-3xl px-4 sm:px-0 flex flex-col gap-4">
+                {/* ช่องค้นหา */}
+                <div className="relative group w-full">
+                  <Search
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-600 group-focus-within:text-red-500 dark:group-focus-within:text-red-400 transition-colors"
+                    size={20}
+                  />
+                  <input
+                    type="text"
+                    value={portfolioSearch}
+                    onChange={(e) => setPortfolioSearch(e.target.value)}
+                    placeholder="ค้นหาชื่อผู้จัดทำ คณะ มหาวิทยาลัย หรือแท็ก..."
+                    className="w-full bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 rounded-xl py-3 pl-12 pr-10 text-neutral-900 dark:text-neutral-300 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-red-500/50 dark:focus:ring-red-600/50 focus:border-transparent transition-all shadow-sm"
+                  />
+                  {portfolioSearch && (
+                    <button
+                      onClick={() => setPortfolioSearch("")}
+                      className="absolute inset-y-0 right-3 flex items-center text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors"
+                    >
+                      <XCircle size={18} />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="w-full px-4 sm:px-0">
+                {filteredPortfolioLinks.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full max-w-[280px] sm:max-w-none mx-auto">
+                    {filteredPortfolioLinks.map((link) => (
+                      <div
+                        key={link.id}
+                        className="relative aspect-[1/1.4142] w-full rounded-none overflow-hidden shadow-md dark:shadow-black/40 hover:shadow-2xl dark:hover:shadow-black/70 border border-neutral-200/50 dark:border-neutral-800/80 transition-all duration-300 hover:-translate-y-2 group select-none flex flex-col justify-end bg-neutral-950"
+                      >
+                        {/* Portfolio Cover Image */}
+                        {link.coverImageUrl && (
+                          <img
+                            src={link.coverImageUrl}
+                            alt={`${link.ownerName || link.title} portfolio cover`}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        )}
+
+                        {/* Top left decorative tag overlay */}
+                        <div className="absolute top-4 left-4 flex flex-wrap gap-1.5 z-10 opacity-80 group-hover:opacity-100 transition-opacity">
+                          {link.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-[10px] font-bold bg-black/60 backdrop-blur-md text-white px-2.5 py-1 rounded-none border border-white/10"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Bottom Dark Gradient Fade */}
+                        <div className="absolute bottom-0 left-0 right-0 h-[50%] bg-gradient-to-t from-black via-black/95 via-60% to-transparent pointer-events-none" />
+
+                        {/* Bottom content area */}
+                        <div className="relative z-10 p-5 sm:p-6 flex flex-col gap-4 w-full">
+                          {/* Text labels (above the button to avoid getting compressed) */}
+                          <div className="flex flex-col gap-1 text-left text-white">
+                            {/* Line 1: Owner Name */}
+                            <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white drop-shadow-md line-clamp-1">
+                              {link.ownerName || "ชื่อเจ้าของผลงาน"}
+                            </h3>
+                            {/* Line 2: Faculty and University */}
+                            <p className="text-[10px] sm:text-xs font-medium text-neutral-300 drop-shadow-md leading-relaxed line-clamp-2">
+                              {link.targetFacultyAndUni || link.description}
+                            </p>
+                          </div>
+
+                          {/* Red Action Button (bottom right) - Rectangular with square corners containing text */}
+                          <div className="flex justify-end">
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-red-600 hover:bg-red-500 active:bg-red-700 text-white rounded-none shadow-lg shadow-red-600/30 dark:shadow-red-950/20 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center group/btn text-xs sm:text-sm font-bold whitespace-nowrap"
+                              title="ดูพอร์ต"
+                            >
+                              <span>ดูพอร์ต</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-16 px-4 border border-dashed border-neutral-200 dark:border-neutral-800/80 w-full max-w-3xl mx-auto flex flex-col items-center justify-center gap-3">
+                    <span className="text-neutral-300 dark:text-neutral-700">
+                      <Search size={48} strokeWidth={1} />
+                    </span>
+                    <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-300">ไม่พบเล่มผลงานที่ต้องการ</h3>
+                    <p className="text-sm text-neutral-500 dark:text-neutral-500">กรุณาลองใช้คำสำคัญอื่นหรือลองกดเลือกแท็กยอดนิยมอื่นๆ</p>
+                    <button
+                      onClick={() => {
+                        setPortfolioSearch("");
+                        setSelectedPortfolioTag("All");
+                      }}
+                      className="mt-2 text-xs font-bold text-red-600 hover:text-red-500 underline uppercase tracking-wider"
+                    >
+                      ล้างตัวกรองทั้งหมด
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* แหล่งเพิ่มเติม */}
+              <div className="w-full px-4 sm:px-0 max-w-3xl mx-auto mt-16 flex flex-col gap-6">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 dark:from-red-400 dark:to-red-650 drop-shadow-sm">
+                    <Library className="text-red-500 dark:text-red-400" size={24} />
+                    แหล่งเพิ่มเติม
+                  </h3>
+                  <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+                    แหล่งรวมเว็บไซต์และแหล่งข้อมูลเพิ่มเติมเพื่อเป็นแนวทางและไอเดียในการทำพอร์ตโฟลิโอ
+                  </p>
+                </div>
+                
                 <div className="flex flex-col gap-4 w-full">
-                  {portfolioLinks.map((link) => (
+                  {additionalPortfolioSources.map((link) => (
                     <div
                       key={link.id}
-                      className="w-full bg-white dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800/50 rounded-2xl p-5 sm:p-6 shadow-sm hover:border-neutral-400 dark:hover:border-neutral-700 transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4 text-left group"
+                      className="w-full rounded-2xl py-4 flex flex-col sm:flex-row sm:items-start justify-between gap-4 text-left group transition-all"
                     >
                       <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                          <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-300 line-clamp-1 transition-colors">
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <h4 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200 group-hover:text-red-500 dark:group-hover:text-red-400 line-clamp-1 transition-colors">
                             {link.title}
-                          </h3>
+                          </h4>
                           <div className="flex flex-wrap items-center gap-1.5">
                             {link.tags.map((tag) => (
                               <span
                                 key={tag}
-                                className="text-[10px] font-medium bg-neutral-100 dark:bg-neutral-800/50 text-neutral-600 dark:text-neutral-400 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors"
+                                className="text-[10px] font-medium bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors"
                               >
                                 {tag}
                               </span>
                             ))}
                           </div>
                         </div>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-500 transition-colors">
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400 transition-colors leading-relaxed">
                           {link.description}
                         </p>
                       </div>
@@ -769,15 +924,16 @@ export default function App() {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-300 rounded-xl text-sm font-medium transition-colors sm:shrink-0"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-gradient-to-r hover:from-red-500 hover:to-red-800 text-neutral-900 dark:text-neutral-300 hover:text-white dark:hover:text-white rounded-xl text-sm font-medium transition-all sm:shrink-0 hover:-translate-y-0.5 active:scale-95 group-hover:shadow-md group-hover:shadow-red-500/10"
                       >
-                        <span>ดูผลงาน</span>
+                        เข้าสู่เว็บไซต์
                         <ExternalLink size={16} />
                       </a>
                     </div>
                   ))}
                 </div>
               </div>
+
             </motion.section>
           )}
 
@@ -789,11 +945,19 @@ export default function App() {
       <footer className="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 py-12 mt-auto transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
-            <div className="bg-neutral-200 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 p-2 rounded-md transition-colors">
-              <Library size={20} />
+            <div className="text-neutral-500 dark:text-neutral-400 p-1 flex items-center justify-center transition-colors">
+              <Copyright size={18} strokeWidth={2} />
             </div>
-            <p className="text-neutral-500 dark:text-neutral-400 text-sm transition-colors">
-              เว็บไซต์รวมข้อสอบของพรรค uunknown
+            <p className="text-neutral-500 dark:text-neutral-400 text-sm transition-colors flex items-center gap-3">
+              <span>เว็บไซต์รวมข้อสอบของพรรค uunknown</span>
+              <span className="text-neutral-300 dark:text-neutral-700">|</span>
+              <a href="#" className="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors">
+                Feedback
+              </a>
+              <span className="text-neutral-300 dark:text-neutral-700">|</span>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors">
+                <Instagram size={18} />
+              </a>
             </p>
           </div>
         </div>

@@ -16,6 +16,9 @@ export interface PortfolioItem {
   description: string;
   url: string;
   tags: string[];
+  ownerName?: string;
+  targetFacultyAndUni?: string;
+  coverImageUrl?: string;
 }
 
 export interface ArchiveItem {
