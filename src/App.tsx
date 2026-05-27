@@ -964,8 +964,8 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 py-12 mt-auto transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+      <footer className="border-t border-neutral-200/50 dark:border-neutral-900 bg-transparent py-6 mt-auto transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
             <div className="text-neutral-500 dark:text-neutral-400 p-1 flex items-center justify-center transition-colors">
               <Copyright size={18} strokeWidth={2} />
