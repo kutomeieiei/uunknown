@@ -212,7 +212,29 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="fixed inset-0 z-[-1] pointer-events-none select-none flex justify-center">
+        {/* Subtle Grid Texture */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        
+        {/* Edge Glows */}
+        <div className="absolute top-[10%] left-[-15%] w-[40%] h-[600px] bg-red-600/10 dark:bg-red-900/15 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[10%] right-[-15%] w-[40%] h-[600px] bg-rose-600/10 dark:bg-rose-900/15 rounded-full blur-[120px]"></div>
+
+        {/* Vertical Watermark Text (Visible on wide screens) */}
+        <div className="hidden 2xl:flex flex-col justify-center absolute left-12 top-0 bottom-0 opacity-[0.04] dark:opacity-[0.02]">
+          <span className="[writing-mode:vertical-rl] transform rotate-180 text-8xl font-black tracking-widest uppercase text-neutral-900 dark:text-white">
+            Collection
+          </span>
+        </div>
+        <div className="hidden 2xl:flex flex-col justify-center absolute right-12 top-0 bottom-0 opacity-[0.04] dark:opacity-[0.02]">
+          <span className="[writing-mode:vertical-rl] text-8xl font-black tracking-widest uppercase text-neutral-900 dark:text-white">
+            Resources
+          </span>
+        </div>
+      </div>
+
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/90 dark:bg-[#050505]/90 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-900 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
