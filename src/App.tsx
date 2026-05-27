@@ -356,99 +356,127 @@ export default function App() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="py-6 sm:py-12 flex flex-col items-center justify-start min-h-[70vh] max-w-5xl mx-auto w-full gap-6 sm:gap-12"
+              className="flex flex-col items-center justify-start w-[100vw] relative left-1/2 -translate-x-1/2 -mt-8 min-h-[70vh]"
             >
-              {/* Text Section */}
-              <div className="text-center px-4 max-w-3xl flex flex-col items-center gap-6">
-                <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight transition-colors text-neutral-900 dark:text-white whitespace-nowrap">
-                  ยินดีต้อนรับสู่{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-800 dark:from-white via-red-500 to-red-600 drop-shadow-md">
-                    Exam Archive
-                  </span>
-                </h2>
-                <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-xl transition-colors">
-                  ค้นหาและดาวน์โหลดข้อสอบเก่า โครงงานวิทยาศาสตร์
-                  และผลงานที่น่าสนใจ
-                  เพื่อเตรียมความพร้อมและแรงบันดาลใจในการเรียน
-                </p>
-              </div>
+              {/* Top Section */}
+              <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-neutral-50 dark:bg-[#050505] text-neutral-900 dark:text-white pt-24 pb-8 flex flex-col items-center z-20">
+                {/* Ambient Background Glow Container */}
+                <div className="absolute inset-0 overflow-visible pointer-events-none z-[25]">
+                  <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[350px] bg-red-500/10 dark:bg-red-900/15 rounded-full blur-[100px]"></div>
+                  <div className="absolute bottom-[-15%] right-[-15%] w-[45%] h-[350px] bg-rose-500/10 dark:bg-rose-900/15 rounded-full blur-[120px]"></div>
+                </div>
 
-              {/* Hero Image Slider */}
-              <div className="w-full px-4 sm:px-0">
-                <ImageSlider />
-              </div>
-
-              {/* Feature Descriptions */}
-              <div className="w-full max-w-4xl mx-auto px-4 sm:px-0 flex flex-col gap-8 sm:gap-12 mt-2 sm:mt-8 text-left">
-                <div className="flex flex-col gap-3">
-                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-neutral-900 dark:via-white to-neutral-400 drop-shadow-sm">
-                    Exams (คลังข้อสอบ)
-                  </h3>
-                  <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed mb-2">
-                    รวบรวมข้อสอบเก่าจากหลากหลายสนามสอบ ไม่ว่าจะเป็น สอวน. TCAS A-Level และข้อสอบเข้ามหาวิทยาลัยชั้นนำต่างๆ เพื่อเป็นแหล่งความรู้อันมีค่าและช่วยให้ผู้เรียนได้ฝึกฝน ทบทวนความรู้ เพื่อเตรียมความพร้อมสำหรับการสอบอย่างมีประสิทธิภาพสูงสุด
+                <div className="text-center px-4 max-w-3xl mx-auto flex flex-col items-center gap-6 relative z-[30] w-full">
+                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight whitespace-nowrap text-neutral-900 dark:text-white">
+                    ยินดีต้อนรับสู่{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-red-700 dark:from-red-400 dark:via-red-500 dark:to-red-600 drop-shadow-md">
+                      Exam Archive
+                    </span>
+                  </h2>
+                  <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-xl">
+                    ค้นหาและดาวน์โหลดข้อสอบเก่า โครงงานวิทยาศาสตร์ และผลงานที่น่าสนใจ เพื่อเตรียมความพร้อมและแรงบันดาลใจในการเรียน
                   </p>
-                  <button
-                    onClick={() => setCurrentView("exams")}
-                    className="mt-2 w-fit px-8 py-3 bg-transparent text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 rounded-xl font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors shadow-sm active:scale-95"
-                  >
-                    เริ่มค้นหาข้อสอบ
-                  </button>
-                  
-                  {/* Infinite Scroll Carousel */}
-                  <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-transparent py-4 sm:py-6 mt-6 flex items-center justify-center">
-                    <div className="w-full inline-flex flex-nowrap overflow-hidden">
-                      <ul className="flex items-center justify-center md:justify-start [&_li]:mx-4 sm:[&_li]:mx-8 [&_li]:text-xs sm:[&_li]:text-base [&_li]:font-black [&_li]:text-transparent [&_li]:bg-clip-text [&_li]:bg-gradient-to-r [&_li]:from-neutral-900 dark:[&_li]:from-white [&_li]:via-red-500 [&_li]:to-neutral-500 [&_li]:whitespace-nowrap [&_li]:tracking-widest animate-infinite-scroll w-max drop-shadow-md">
-                      <li>POSN</li>
-                      <li>TCAS</li>
-                      <li>NETSAT</li>
-                      <li>A-LEVEL</li>
-                      <li>TGAT</li>
-                      <li>TPAT</li>
-                      <li>สอวน.</li>
-                      <li>IJSO</li>
-                      <li>POSN</li>
-                      <li>TCAS</li>
-                      <li>NETSAT</li>
-                      <li>A-LEVEL</li>
-                      <li>TGAT</li>
-                      <li>TPAT</li>
-                      <li>สอวน.</li>
-                      <li>IJSO</li>
-                      {/* Duplicated for seamless looping */}
-                      <li aria-hidden="true">POSN</li>
-                      <li aria-hidden="true">TCAS</li>
-                      <li aria-hidden="true">NETSAT</li>
-                      <li aria-hidden="true">A-LEVEL</li>
-                      <li aria-hidden="true">TGAT</li>
-                      <li aria-hidden="true">TPAT</li>
-                      <li aria-hidden="true">สอวน.</li>
-                      <li aria-hidden="true">IJSO</li>
-                      <li aria-hidden="true">POSN</li>
-                      <li aria-hidden="true">TCAS</li>
-                      <li aria-hidden="true">NETSAT</li>
-                      <li aria-hidden="true">A-LEVEL</li>
-                      <li aria-hidden="true">TGAT</li>
-                      <li aria-hidden="true">TPAT</li>
-                      <li aria-hidden="true">สอวน.</li>
-                      <li aria-hidden="true">IJSO</li>
-                    </ul>
-                  </div>
+                </div>
+              </div>
+
+              {/* Middle Section */}
+              <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-white dark:bg-neutral-900 pt-6 pb-4 z-10 overflow-visible">
+                {/* SVG dripping shape at the top of Middle Section */}
+                <div className="absolute top-0 left-0 w-[100vw] overflow-hidden leading-[0] z-20 drop-shadow-xl pointer-events-none">
+                  <svg className="block w-full h-[220px] md:h-[440px] fill-neutral-50 dark:fill-[#050505] drop-shadow-md" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M0,0 V46.29C39.4,46.29 55.6,90.3 113,90.3 170.4,90.3 186.6,18.4 226,18.4 265.4,18.4 286.7,71.2 339,71.2 391.3,71.2 411.5,12 452,12 492.5,12 506.7,55 565,55 623.3,55 640.7,21 678,21 715.3,21 732.1,80 791,80 849.9,80 862.6,35 904,35 945.4,35 965.7,85 1017,85 1068.3,85 1084.7,26 1130,26 1175.3,26 1186,46.29 1200,46.29V0Z"></path>
+                  </svg>
+                </div>
+
+                <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col relative z-30">
+                  <div className="w-full">
+                    <ImageSlider />
                   </div>
                 </div>
-                
-                <div className="flex flex-col gap-3">
-                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-neutral-900 dark:via-white to-neutral-400 drop-shadow-sm">
-                    Portfolio & University (แฟ้มสะสมผลงานและมหาวิทยาลัย)
-                  </h3>
-                  <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
-                    พื้นที่จัดเก็บและนำเสนอผลงาน กิจกรรม และโครงงานวิทยาศาสตร์ต่างๆ ของนักเรียน เพื่อแบ่งปันไอเดีย ความสำเร็จ เป็นแนวทางในการจัดทำแฟ้มสะสมผลงาน พร้อมทั้งข้อมูล เเละรายละเอียดของคณะและมหาวิทยาลัยต่างๆ เพื่อสร้างแรงบันดาลใจในการศึกษาต่อ ช่วยประกอบการตัดสินใจ และเตรียมความพร้อมเพื่อก้าวเข้าสู่รั้วมหาวิทยาลัยในฝันอย่างมั่นใจ
-                  </p>
-                  <button
-                    onClick={() => setCurrentView("portfolio")}
-                    className="mt-2 w-fit px-8 py-3 bg-transparent text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 rounded-xl font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors shadow-sm active:scale-95"
-                  >
-                    ดูผลงาน Portfolio
-                  </button>
+              </div>
+
+              {/* Smooth transition spacer right below the slider */}
+              <div className="w-[100vw] h-4 relative left-1/2 -translate-x-1/2 bg-white dark:bg-neutral-900 z-10 pointer-events-none" />
+
+              {/* Bottom Section */}
+              <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-neutral-50 dark:bg-[#050505] text-neutral-900 dark:text-white pt-10 pb-24 mt-auto z-10 flex flex-col items-center">
+                {/* Ambient Background Glow Container */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                  <div className="absolute top-[10%] left-[-15%] w-[45%] h-[350px] bg-rose-500/10 dark:bg-rose-900/15 rounded-full blur-[110px]"></div>
+                  <div className="absolute bottom-[10%] right-[-10%] w-[50%] h-[350px] bg-red-500/10 dark:bg-red-900/15 rounded-full blur-[100px]"></div>
+                </div>
+
+                <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col gap-12 text-left relative z-10">
+                  <div className="flex flex-col gap-3">
+                    <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-neutral-900 dark:via-white to-neutral-400 drop-shadow-sm">
+                      Exams (คลังข้อสอบ)
+                    </h3>
+                    <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed mb-2">
+                      รวบรวมข้อสอบเก่าจากหลากหลายสนามสอบ ไม่ว่าจะเป็น สอวน. TCAS A-Level และข้อสอบเข้ามหาวิทยาลัยชั้นนำต่างๆ เพื่อเป็นแหล่งความรู้อันมีค่าและช่วยให้ผู้เรียนได้ฝึกฝน ทบทวนความรู้ เพื่อเตรียมความพร้อมสำหรับการสอบอย่างมีประสิทธิภาพสูงสุด
+                    </p>
+                    <button
+                      onClick={() => setCurrentView("exams")}
+                      className="mt-2 w-fit px-8 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors shadow-sm active:scale-95 border border-transparent"
+                    >
+                      เริ่มค้นหาข้อสอบ
+                    </button>
+                  </div>
+
+                  {/* Infinite Scroll Carousel */}
+                  <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-transparent py-4 flex items-center justify-center my-8 overflow-hidden">
+                    <div className="w-full inline-flex flex-nowrap overflow-hidden">
+                      <ul className="flex items-center justify-center md:justify-start [&_li]:mx-4 sm:[&_li]:mx-8 [&_li]:text-xs sm:[&_li]:text-base [&_li]:font-black [&_li]:text-transparent [&_li]:bg-clip-text [&_li]:bg-gradient-to-r [&_li]:from-neutral-900 dark:[&_li]:from-white [&_li]:via-red-500 [&_li]:to-neutral-500 [&_li]:whitespace-nowrap [&_li]:tracking-widest animate-infinite-scroll w-max drop-shadow-md">
+                        <li>POSN</li>
+                        <li>TCAS</li>
+                        <li>NETSAT</li>
+                        <li>A-LEVEL</li>
+                        <li>TGAT</li>
+                        <li>TPAT</li>
+                        <li>สอวน.</li>
+                        <li>IJSO</li>
+                        <li>POSN</li>
+                        <li>TCAS</li>
+                        <li>NETSAT</li>
+                        <li>A-LEVEL</li>
+                        <li>TGAT</li>
+                        <li>TPAT</li>
+                        <li>สอวน.</li>
+                        <li>IJSO</li>
+                        {/* Duplicated for seamless looping */}
+                        <li aria-hidden="true">POSN</li>
+                        <li aria-hidden="true">TCAS</li>
+                        <li aria-hidden="true">NETSAT</li>
+                        <li aria-hidden="true">A-LEVEL</li>
+                        <li aria-hidden="true">TGAT</li>
+                        <li aria-hidden="true">TPAT</li>
+                        <li aria-hidden="true">สอวน.</li>
+                        <li aria-hidden="true">IJSO</li>
+                        <li aria-hidden="true">POSN</li>
+                        <li aria-hidden="true">TCAS</li>
+                        <li aria-hidden="true">NETSAT</li>
+                        <li aria-hidden="true">A-LEVEL</li>
+                        <li aria-hidden="true">TGAT</li>
+                        <li aria-hidden="true">TPAT</li>
+                        <li aria-hidden="true">สอวน.</li>
+                        <li aria-hidden="true">IJSO</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col gap-3">
+                    <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-neutral-900 dark:via-white to-neutral-400 drop-shadow-sm">
+                      Portfolio & University (แฟ้มสะสมผลงานและมหาวิทยาลัย)
+                    </h3>
+                    <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed mb-2">
+                      พื้นที่จัดเก็บและนำเสนอผลงาน กิจกรรม และโครงงานวิทยาศาสตร์ต่างๆ ของนักเรียน เพื่อแบ่งปันไอเดีย ความสำเร็จ เป็นแนวทางในการจัดทำแฟ้มสะสมผลงาน พร้อมทั้งข้อมูล เเละรายละเอียดของคณะและมหาวิทยาลัยต่างๆ เพื่อสร้างแรงบันดาลใจในการศึกษาต่อ ช่วยประกอบการตัดสินใจ และเตรียมความพร้อมเพื่อก้าวเข้าสู่รั้วมหาวิทยาลัยในฝันอย่างมั่นใจ
+                    </p>
+                    <button
+                      onClick={() => setCurrentView("portfolio")}
+                      className="mt-1 w-fit px-8 py-3 bg-neutral-200 dark:bg-white/10 text-neutral-900 dark:text-white border border-neutral-300 dark:border-white/20 hover:bg-neutral-300 dark:hover:bg-white/20 rounded-xl font-medium transition-colors shadow-sm active:scale-95"
+                    >
+                      ดูผลงาน Portfolio
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.section>
