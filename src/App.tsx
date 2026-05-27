@@ -395,8 +395,8 @@ export default function App() {
                   </button>
                   
                   {/* Infinite Scroll Carousel */}
-                  <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-gradient-to-b from-neutral-100 dark:from-black via-white dark:via-neutral-900 to-neutral-100 dark:to-black py-4 sm:py-6 mt-6 border-y border-red-200 dark:border-red-900/30 flex items-center justify-center">
-                    <div className="w-full max-w-7xl inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_40px,_black_calc(100%-40px),transparent_100%)] sm:[mask-image:_linear-gradient(to_right,transparent_0,_black_80px,_black_calc(100%-80px),transparent_100%)]">
+                  <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-transparent py-4 sm:py-6 mt-6 border-y border-red-200 dark:border-red-900/30 flex items-center justify-center">
+                    <div className="w-full inline-flex flex-nowrap overflow-hidden">
                       <ul className="flex items-center justify-center md:justify-start [&_li]:mx-4 sm:[&_li]:mx-8 [&_li]:text-xs sm:[&_li]:text-base [&_li]:font-black [&_li]:text-transparent [&_li]:bg-clip-text [&_li]:bg-gradient-to-r [&_li]:from-neutral-900 dark:[&_li]:from-white [&_li]:via-red-500 [&_li]:to-neutral-500 [&_li]:whitespace-nowrap [&_li]:tracking-widest animate-infinite-scroll w-max drop-shadow-md">
                       <li>POSN</li>
                       <li>TCAS</li>
