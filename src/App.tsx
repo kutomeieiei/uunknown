@@ -214,7 +214,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 transition-colors">
+      <header className="sticky top-0 z-50 bg-white/90 dark:bg-[#050505]/90 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-900 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center gap-4">
@@ -372,7 +372,7 @@ export default function App() {
               {/* Feature Descriptions */}
               <div className="w-full max-w-4xl mx-auto px-4 sm:px-0 flex flex-col gap-8 sm:gap-12 mt-2 sm:mt-8 text-left">
                 <div className="flex flex-col gap-3">
-                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-neutral-900 dark:via-white to-neutral-400 drop-shadow-sm">
+                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-neutral-900 dark:via-white to-neutral-400 drop-shadow-sm">
                     Exams (คลังข้อสอบ)
                   </h3>
                   <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed mb-2">
@@ -476,7 +476,7 @@ export default function App() {
               <div className="text-center px-4 max-w-3xl mx-auto flex flex-col items-center gap-4 mb-4 relative z-10">
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight transition-colors text-neutral-900 dark:text-white">
                   ค้นหา{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 dark:from-red-400 dark:to-red-650 drop-shadow-md">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700 dark:from-red-500 dark:to-red-600 drop-shadow-md">
                     แหล่งข้อสอบเก่า
                   </span>
                 </h2>
@@ -506,7 +506,7 @@ export default function App() {
                         {selectedCategory === cat && (
                           <motion.div
                             layoutId="active-category"
-                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -541,7 +541,7 @@ export default function App() {
                           {selectedExamType === et && (
                             <motion.div
                               layoutId="active-exam-type"
-                              className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
+                              className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
                               transition={{
                                 type: "spring",
                                 bounce: 0.2,
@@ -572,7 +572,7 @@ export default function App() {
                         {sourceType === "All" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -593,7 +593,7 @@ export default function App() {
                         {sourceType === "Official" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -614,7 +614,7 @@ export default function App() {
                         {sourceType === "Unofficial" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -739,7 +739,7 @@ export default function App() {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-gradient-to-r hover:from-red-500 hover:to-rose-600 text-neutral-900 dark:text-neutral-300 hover:text-white dark:hover:text-white rounded-xl text-sm font-medium transition-all sm:shrink-0 hover:-translate-y-0.5 active:scale-95 border border-neutral-200/50 dark:border-neutral-700/50 hover:border-transparent dark:hover:border-transparent group-hover:shadow-md group-hover:shadow-red-500/10"
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-red-600 text-neutral-900 dark:text-neutral-300 hover:text-white dark:hover:text-white rounded-xl text-sm font-medium transition-all sm:shrink-0 hover:-translate-y-0.5 active:scale-95 border border-neutral-200/50 dark:border-neutral-700/50 hover:border-transparent dark:hover:border-transparent group-hover:shadow-md group-hover:shadow-red-600/20"
                           >
                             <span>ไปที่เว็บไซต์</span>
                           </a>
@@ -885,7 +885,7 @@ export default function App() {
               {/* แหล่งเพิ่มเติม */}
               <div className="w-full px-4 sm:px-0 max-w-3xl mx-auto mt-16 flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 dark:from-red-400 dark:to-red-650 drop-shadow-sm">
+                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700 dark:from-red-500 dark:to-red-600 drop-shadow-sm">
                     <Library className="text-red-500 dark:text-red-400" size={24} />
                     แหล่งเพิ่มเติม
                   </h3>
@@ -924,7 +924,7 @@ export default function App() {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-gradient-to-r hover:from-red-500 hover:to-red-800 text-neutral-900 dark:text-neutral-300 hover:text-white dark:hover:text-white rounded-xl text-sm font-medium transition-all sm:shrink-0 hover:-translate-y-0.5 active:scale-95 group-hover:shadow-md group-hover:shadow-red-500/10"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-red-600 text-neutral-900 dark:text-neutral-300 hover:text-white dark:hover:text-white rounded-xl text-sm font-medium transition-all sm:shrink-0 hover:-translate-y-0.5 active:scale-95 group-hover:shadow-md group-hover:shadow-red-600/20"
                       >
                         เข้าสู่เว็บไซต์
                         <ExternalLink size={16} />
