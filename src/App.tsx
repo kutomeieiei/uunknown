@@ -389,7 +389,7 @@ export default function App() {
 
                 {/* SVG dripping shape at the top of Middle Section */}
                 <div className="absolute top-0 left-0 w-[100vw] overflow-hidden leading-[0] z-20 pointer-events-none transform-gpu -mt-[1px]">
-                  <svg className="block w-full h-[220px] md:h-[440px] fill-neutral-50 dark:fill-[#050505]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                  <svg className="block w-full h-[60px] sm:h-[90px] md:h-[140px] lg:h-[180px] fill-neutral-50 dark:fill-[#050505]" viewBox="0 0 1200 120" preserveAspectRatio="none">
                     <path d="M0,0 V46.29C39.4,46.29 55.6,90.3 113,90.3 170.4,90.3 186.6,18.4 226,18.4 265.4,18.4 286.7,71.2 339,71.2 391.3,71.2 411.5,12 452,12 492.5,12 506.7,55 565,55 623.3,55 640.7,21 678,21 715.3,21 732.1,80 791,80 849.9,80 862.6,35 904,35 945.4,35 965.7,85 1017,85 1068.3,85 1084.7,26 1130,26 1175.3,26 1186,46.29 1200,46.29V0Z"></path>
                   </svg>
                 </div>
