@@ -382,6 +382,7 @@ export default function App() {
                 <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col gap-12 text-left relative z-10">
                   <div className="flex flex-col gap-3">
                     <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">
+                      <span className="inline-block text-red-500 drop-shadow-md text-3xl font-normal -rotate-12 transform" style={{ WebkitTextFillColor: '#ef4444' }}>✦</span>
                       Exams (คลังข้อสอบ)
                     </h3>
                     <p className="text-neutral-600 dark:text-white/90 text-lg leading-relaxed mb-2">
@@ -389,7 +390,7 @@ export default function App() {
                     </p>
                     <button
                       onClick={() => setCurrentView("exams")}
-                      className="mt-2 w-fit px-8 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors shadow-sm active:scale-95 border border-transparent"
+                      className="mt-1 w-fit px-8 py-3 bg-neutral-200 dark:bg-white/10 text-neutral-900 dark:text-white border border-neutral-300 dark:border-white/20 hover:bg-neutral-300 dark:hover:bg-white/20 rounded-xl font-medium transition-colors shadow-sm active:scale-95"
                     >
                       เริ่มค้นหาข้อสอบ
                     </button>
@@ -438,6 +439,7 @@ export default function App() {
                   
                   <div className="flex flex-col gap-3">
                     <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">
+                      <span className="inline-block text-red-500 drop-shadow-md text-3xl font-normal -rotate-12 transform" style={{ WebkitTextFillColor: '#ef4444' }}>✦</span>
                       Portfolio & University (แฟ้มสะสมผลงานและมหาวิทยาลัย)
                     </h3>
                     <p className="text-neutral-600 dark:text-white/90 text-lg leading-relaxed mb-2">
@@ -532,7 +534,7 @@ export default function App() {
                         {selectedCategory === cat && (
                           <motion.div
                             layoutId="active-category"
-                            className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -567,7 +569,7 @@ export default function App() {
                           {selectedExamType === et && (
                             <motion.div
                               layoutId="active-exam-type"
-                              className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
+                              className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 rounded-lg shadow-sm"
                               transition={{
                                 type: "spring",
                                 bounce: 0.2,
@@ -598,7 +600,7 @@ export default function App() {
                         {sourceType === "All" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -619,7 +621,7 @@ export default function App() {
                         {sourceType === "Official" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -640,7 +642,7 @@ export default function App() {
                         {sourceType === "Unofficial" && (
                           <motion.div
                             layoutId="active-source-type"
-                            className="absolute inset-0 bg-red-600 rounded-lg shadow-sm"
+                            className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 rounded-lg shadow-sm"
                             transition={{
                               type: "spring",
                               bounce: 0.2,
@@ -678,8 +680,10 @@ export default function App() {
               {/* Archive Grid/List */}
               <section className="pb-24 relative z-10">
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 border-b border-neutral-200 dark:border-neutral-800 pb-4 transition-colors">
-                  <h3 className="text-xl font-bold text-neutral-900 dark:text-neutral-300 transition-colors flex items-center gap-2">
-                    แหล่งข้อสอบเก่า ({filteredExternalLinks.length} รายการ)
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <span className="inline-block text-red-500 drop-shadow-md text-2xl font-normal -rotate-12 transform" style={{ WebkitTextFillColor: '#ef4444' }}>✦</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">แหล่งข้อสอบเก่า</span>
+                    <span className="text-neutral-900 dark:text-neutral-300">({filteredExternalLinks.length} รายการ)</span>
                   </h3>
                 </div>
 
@@ -729,11 +733,11 @@ export default function App() {
                               </h3>
                               <div className="flex flex-wrap items-center gap-1.5">
                                 {link.isOfficialSource ? (
-                                  <span className="text-[10px] font-semibold bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 dark:border-red-900/30 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors flex items-center gap-1 uppercase tracking-wider">
+                                  <span className="text-[10px] font-medium bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 border border-neutral-200/50 dark:border-neutral-700/50 px-2.5 py-0.5 rounded-full whitespace-nowrap transition-colors flex items-center gap-1 uppercase tracking-wider">
                                     Official
                                   </span>
                                 ) : (
-                                  <span className="text-[10px] font-semibold bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 dark:border-red-900/30 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors flex items-center gap-1 uppercase tracking-wider">
+                                  <span className="text-[10px] font-medium bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 border border-neutral-200/50 dark:border-neutral-700/50 px-2.5 py-0.5 rounded-full whitespace-nowrap transition-colors flex items-center gap-1 uppercase tracking-wider">
                                     รวบรวม
                                   </span>
                                 )}
@@ -912,7 +916,7 @@ export default function App() {
               <div className="w-full px-4 sm:px-0 max-w-3xl mx-auto mt-16 flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
                   <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">
-                    <Library className="text-red-500 dark:text-red-400" size={24} />
+                    <span className="inline-block text-red-500 drop-shadow-md text-3xl font-normal -rotate-12 transform" style={{ WebkitTextFillColor: '#ef4444' }}>✦</span>
                     แหล่งเพิ่มเติม
                   </h3>
                   <p className="text-neutral-600 dark:text-white/90 text-sm">
