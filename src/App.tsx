@@ -23,10 +23,6 @@ import {
   Mic,
   Copyright,
   Instagram,
-  Image,
-  Upload,
-  Trash2,
-  Sliders,
 } from "lucide-react";
 import { mockArchives } from "./data/mockArchives";
 import { externalLinks } from "./data/externalLinks";
@@ -113,12 +109,6 @@ const handleMockDownload = (item: ArchiveItem) => {
   document.body.removeChild(element);
 };
 
-// ==========================================
-// 🛠️ ตั้งค่าภาพพื้นหลังส่วนกลาง (Middle Section Background)
-// ก๊อปปี้ลิงก์รูปภาพ (เช่น "https://...") หรือรูปภาพแบบ Base64 มาแปะได้ในตัวแปรด้านล่างนี้ได้เลยครับ!
-// ==========================================
-const MIDDLE_SECTION_BACKGROUND_IMAGE = "https://cdn.discordapp.com/attachments/1455582752484229140/1506688582088392885/image.png?ex=6a190fd6&is=6a17be56&hm=6d191c6ca403f2b530382b576dd0bf911b62a5cc2abf30c3beb91a080df17522&"; // 👈 วางลิงก์รูปตรงชองนี้เพื่อเป็นพื้นหลังส่วนกลาง
-const MIDDLE_SECTION_BACKGROUND_OPACITY = 1; // 👈 ปรับความเข้ม/ความสว่างของภาพพื้นหลัง (ปรับระหว่าง 0.1 - 1.0)
 
 export default function App() {
   const [currentView, setCurrentView] = useState<
@@ -370,72 +360,31 @@ export default function App() {
             >
               {/* Top Section */}
               <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-neutral-50 dark:bg-[#050505] text-neutral-900 dark:text-white pt-24 pb-8 flex flex-col items-center z-[40]">
-                {/* Ambient Background Glow Container */}
-                <div className="absolute inset-0 overflow-visible pointer-events-none z-[25]">
-                  <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[350px] bg-red-500/10 dark:bg-red-900/15 rounded-full blur-[100px] transform-gpu"></div>
-                  <div className="absolute bottom-[-15%] right-[-15%] w-[45%] h-[350px] bg-rose-500/10 dark:bg-rose-900/15 rounded-full blur-[120px] transform-gpu"></div>
-                </div>
+                {/* Removed Ambient Background Glow Container for minimal look */}
 
                 <div className="text-center px-4 max-w-3xl mx-auto flex flex-col items-center gap-6 relative z-[30] w-full">
                   <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight whitespace-nowrap text-neutral-900 dark:text-white">
                     ยินดีต้อนรับสู่{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-red-700 dark:from-red-400 dark:via-red-500 dark:to-red-600 drop-shadow-md">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-md">
                       Exam Archive
                     </span>
                   </h2>
-                  <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-xl">
+                  <p className="text-lg text-neutral-600 dark:text-white/90 max-w-xl">
                     ค้นหาและดาวน์โหลดข้อสอบเก่า โครงงานวิทยาศาสตร์ และผลงานที่น่าสนใจ เพื่อเตรียมความพร้อมและแรงบันดาลใจในการเรียน
                   </p>
                 </div>
               </div>
 
-              {/* Middle Section */}
-              <div 
-                className="w-[100vw] relative left-1/2 -translate-x-1/2 pt-6 pb-4 z-[35] overflow-visible backdrop-blur-sm min-h-[160px] md:min-h-[260px] flex flex-col items-center justify-center transition-all duration-500 bg-[#faf7f7] dark:bg-[#1e1717]"
-                style={{
-                  backgroundImage: MIDDLE_SECTION_BACKGROUND_IMAGE ? `url(${MIDDLE_SECTION_BACKGROUND_IMAGE})` : undefined,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              >
-                {/* Opacity Overlay to blend the image perfectly with Light/Dark scheme */}
-                {MIDDLE_SECTION_BACKGROUND_IMAGE && (
-                  <div 
-                    className="absolute inset-0 bg-[#faf7f7] dark:bg-[#1e1717] transition-all duration-300 pointer-events-none"
-                    style={{ opacity: 1 - MIDDLE_SECTION_BACKGROUND_OPACITY }}
-                  />
-                )}
-                
-                {/* Ambient Dark Red Glow Container */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[250px] bg-red-900/10 dark:bg-red-900/30 rounded-full blur-[100px] transform-gpu"></div>
-                </div>
-
-                {/* SVG Curve at the bottom of Middle Section */}
-                <div className="absolute top-full left-0 w-[100vw] leading-[0] z-20 pointer-events-none -mt-[1px]">
-                  <svg className="block w-full h-[60px] md:h-[100px] fill-[#faf7f7] dark:fill-[#1e1717]" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                     <path d="M0,0 Q600,120 1200,0 Z"></path>
-                  </svg>
-                </div>
-              </div>
-
-              {/* Bottom transition spacer beneath the curve */}
-              <div className="w-[100vw] h-[80px] relative left-1/2 -translate-x-1/2 bg-neutral-50 dark:bg-[#050505] z-[30] pointer-events-none" />
-
               {/* Bottom Section */}
               <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-neutral-50 dark:bg-[#050505] text-neutral-900 dark:text-white pt-10 pb-24 mt-auto z-[30] flex flex-col items-center">
-                {/* Ambient Background Glow Container */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                  <div className="absolute top-[10%] left-[-15%] w-[45%] h-[350px] bg-rose-500/10 dark:bg-rose-900/15 rounded-full blur-[110px] transform-gpu"></div>
-                  <div className="absolute bottom-[10%] right-[-10%] w-[50%] h-[350px] bg-red-500/10 dark:bg-red-900/15 rounded-full blur-[100px] transform-gpu"></div>
-                </div>
+                {/* Removed Ambient Background Glow Container for minimal look */}
 
                 <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col gap-12 text-left relative z-10">
                   <div className="flex flex-col gap-3">
-                    <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-neutral-900 dark:via-white to-neutral-400 drop-shadow-sm">
+                    <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">
                       Exams (คลังข้อสอบ)
                     </h3>
-                    <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed mb-2">
+                    <p className="text-neutral-600 dark:text-white/90 text-lg leading-relaxed mb-2">
                       รวบรวมข้อสอบเก่าจากหลากหลายสนามสอบ ไม่ว่าจะเป็น สอวน. TCAS A-Level และข้อสอบเข้ามหาวิทยาลัยชั้นนำต่างๆ เพื่อเป็นแหล่งความรู้อันมีค่าและช่วยให้ผู้เรียนได้ฝึกฝน ทบทวนความรู้ เพื่อเตรียมความพร้อมสำหรับการสอบอย่างมีประสิทธิภาพสูงสุด
                     </p>
                     <button
@@ -488,10 +437,10 @@ export default function App() {
                   </div>
                   
                   <div className="flex flex-col gap-3">
-                    <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-neutral-900 dark:via-white to-neutral-400 drop-shadow-sm">
+                    <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">
                       Portfolio & University (แฟ้มสะสมผลงานและมหาวิทยาลัย)
                     </h3>
-                    <p className="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed mb-2">
+                    <p className="text-neutral-600 dark:text-white/90 text-lg leading-relaxed mb-2">
                       พื้นที่จัดเก็บและนำเสนอผลงาน กิจกรรม และโครงงานวิทยาศาสตร์ต่างๆ ของนักเรียน เพื่อแบ่งปันไอเดีย ความสำเร็จ เป็นแนวทางในการจัดทำแฟ้มสะสมผลงาน พร้อมทั้งข้อมูล เเละรายละเอียดของคณะและมหาวิทยาลัยต่างๆ เพื่อสร้างแรงบันดาลใจในการศึกษาต่อ ช่วยประกอบการตัดสินใจ และเตรียมความพร้อมเพื่อก้าวเข้าสู่รั้วมหาวิทยาลัยในฝันอย่างมั่นใจ
                     </p>
                     <button
@@ -553,11 +502,11 @@ export default function App() {
               <div className="text-center px-4 max-w-3xl mx-auto flex flex-col items-center gap-4 mb-4 relative z-10">
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight transition-colors text-neutral-900 dark:text-white">
                   ค้นหา{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700 dark:from-red-500 dark:to-red-600 drop-shadow-md">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-md">
                     แหล่งข้อสอบเก่า
                   </span>
                 </h2>
-                <p className="text-md text-neutral-600 dark:text-neutral-400 max-w-xl transition-colors">
+                <p className="text-md text-neutral-600 dark:text-white/90 max-w-xl transition-colors">
                   รวบรวมช่องทางดาวน์โหลดและติวข้อสอบจากผู้ออกข้อสอบจริงและแหล่งแนวข้อสอบชั้นนำ เพื่อการเตรียมความพร้อมอย่างไร้ขีดจำกัด
                 </p>
               </div>
@@ -808,7 +757,7 @@ export default function App() {
                                   ))}
                               </div>
                             </div>
-                            <p className="text-sm text-neutral-600 dark:text-neutral-400 transition-colors leading-relaxed">
+                            <p className="text-sm text-neutral-600 dark:text-white/90 transition-colors leading-relaxed">
                               {link.description}
                             </p>
                           </div>
@@ -843,7 +792,7 @@ export default function App() {
                   Student Portfolios
                 </h2>
                 <div className="h-1 w-12 bg-red-500 mx-auto rounded-full mb-4" />
-                <p className="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto transition-colors">
+                <p className="text-neutral-600 dark:text-white/90 max-w-xl mx-auto transition-colors">
                   รวบรวมเล่มผลงานสะสม (Portfolio) ที่ผ่านการคัดเลือกเข้าศึกษาจริงในมหาวิทยาลัยต่างๆ เพื่อเป็นประทีปส่องทางและแรงบันดาลใจแด่น้องๆ รุ่นต่อไป
                 </p>
               </div>
@@ -962,11 +911,11 @@ export default function App() {
               {/* แหล่งเพิ่มเติม */}
               <div className="w-full px-4 sm:px-0 max-w-3xl mx-auto mt-16 flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700 dark:from-red-500 dark:to-red-600 drop-shadow-sm">
+                  <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">
                     <Library className="text-red-500 dark:text-red-400" size={24} />
                     แหล่งเพิ่มเติม
                   </h3>
-                  <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+                  <p className="text-neutral-600 dark:text-white/90 text-sm">
                     แหล่งรวมเว็บไซต์และแหล่งข้อมูลเพิ่มเติมเพื่อเป็นแนวทางและไอเดียในการทำพอร์ตโฟลิโอ
                   </p>
                 </div>
@@ -993,7 +942,7 @@ export default function App() {
                             ))}
                           </div>
                         </div>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400 transition-colors leading-relaxed">
+                        <p className="text-sm text-neutral-600 dark:text-white/90 transition-colors leading-relaxed">
                           {link.description}
                         </p>
                       </div>
