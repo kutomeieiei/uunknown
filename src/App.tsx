@@ -23,6 +23,8 @@ import {
   Mic,
   Copyright,
   Instagram,
+  Mail,
+  Facebook,
 } from "lucide-react";
 import oripiusIcon from "./assets/icons/oripius.png";
 import { mockArchives } from "./data/mockArchives";
@@ -31,85 +33,6 @@ import { portfolioLinks } from "./data/portfolioLinks";
 import { University } from "./components/University";
 import { ArchiveItem, ArchiveCategory } from "./types";
 import { motion, AnimatePresence } from "motion/react";
-
-const TypeIcon = ({
-  type,
-  className,
-  size = 24,
-}: {
-  type: string;
-  className?: string;
-  size?: number;
-}) => {
-  // NOTE: If you decide to use Google Drive image URLs, you must use the `uc?export=view` format.
-  // Instead of the share link: https://drive.google.com/file/d/FILE_ID/view
-  // Use this formatted URL:     https://drive.google.com/uc?export=view&id=FILE_ID
-  const getIconPath = () => {
-    switch (type.toLowerCase()) {
-      case "posn":
-        return "https://drive.google.com/thumbnail?id=1bYZ03JwDRCJODvH9CIPRMazYqItUBrtv&sz=w400";
-      case "tcas":
-        return "https://drive.google.com/thumbnail?id=1eS1Q7O3FyDwqGsm64DZxN6TBrOaoUMfI";
-      default:
-        return "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=128&q=80";
-    }
-  };
-
-  return (
-    <img
-      src={getIconPath()}
-      alt={`${type} icon`}
-      className={`${className || ""} rounded-md object-cover`}
-      style={{ width: size, height: size }}
-      referrerPolicy="no-referrer"
-      onError={(e) => {
-        // Fallback to default if image fails to load (often due to Google Drive permissions)
-        const target = e.target as HTMLImageElement;
-        target.onerror = null; // Prevent infinite loop
-        target.src =
-          "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=128&q=80";
-      }}
-    />
-  );
-};
-
-const DifficultyBar = ({ level }: { level: number }) => {
-  return (
-    <div
-      className="flex items-center gap-1.5 shrink-0 border-l border-neutral-200 dark:border-neutral-800 pl-3"
-      title={`Difficulty: ${level}/5`}
-    >
-      <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-widest hidden sm:inline">
-        Difficulty
-      </span>
-      <div className="flex gap-0.5">
-        {[1, 2, 3, 4, 5].map((i) => (
-          <div
-            key={i}
-            className={`w-1.5 h-3 rounded-[1px] ${i <= level ? (level > 3 ? "bg-rose-500 dark:bg-rose-600" : level > 2 ? "bg-amber-500 dark:bg-amber-600" : "bg-emerald-500 dark:bg-emerald-600") : "bg-neutral-200 dark:bg-neutral-800"}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const handleMockDownload = (item: ArchiveItem) => {
-  // Create a mock blob of data to act as the "download" file
-  const element = document.createElement("a");
-  const file = new Blob(
-    [
-      `DIGITAL ARCHIVE EXPORT\n\nID: ${item.id}\nTitle: ${item.title}\nCategory: ${item.category}\nDate Added: ${item.dateAdded}\n\nDescription: ${item.description}\n\n[End of File - Mock Archive]`,
-    ],
-    { type: "text/plain" },
-  );
-  element.href = URL.createObjectURL(file);
-  element.download = `${item.id}-${item.title.replace(/\\s+/g, "-").toLowerCase()}.txt`;
-  document.body.appendChild(element); // Required for this to work in FireFox
-  element.click();
-  document.body.removeChild(element);
-};
-
 
 export default function App() {
   const [currentView, setCurrentView] = useState<
@@ -266,7 +189,7 @@ export default function App() {
                 onClick={() => setCurrentView("about")}
                 className={`text-sm font-bold transition-colors ${currentView === "about" ? "text-neutral-900 dark:text-neutral-100" : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"}`}
               >
-                About Me
+                About Us
               </button>
             </div>
 
@@ -335,7 +258,7 @@ export default function App() {
                   }}
                   className={`text-left text-base font-medium transition-colors ${currentView === "about" ? "text-neutral-900 dark:text-neutral-300" : "text-neutral-500 dark:text-neutral-500"}`}
                 >
-                  About Me
+                  About Us
                 </button>
               </div>
             </motion.div>
@@ -361,13 +284,13 @@ export default function App() {
 
                 <div className="text-center px-4 max-w-3xl mx-auto flex flex-col items-center gap-6 relative z-[30] w-full">
                   <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight whitespace-nowrap text-neutral-900 dark:text-white">
-                    ยินดีต้อนรับสู่{" "}
+                    ยินดีต้อนรับเข้าสู่{" "}
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-md">
-                      Exam Archive
+                      Oripius
                     </span>
                   </h2>
                   <p className="text-lg text-neutral-600 dark:text-white/90 max-w-xl">
-                    ค้นหาและดาวน์โหลดข้อสอบเก่า โครงงานวิทยาศาสตร์ และผลงานที่น่าสนใจ เพื่อเตรียมความพร้อมและแรงบันดาลใจในการเรียน
+                    Knowledge Hub For the New Era <br /> "Wisdom Grow With Study"
                   </p>
                 </div>
               </div>
@@ -380,10 +303,10 @@ export default function App() {
                   <div className="flex flex-col gap-3">
                     <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">
                       <span className="inline-block text-red-500 drop-shadow-md text-3xl font-normal -rotate-12 transform" style={{ WebkitTextFillColor: '#ef4444' }}>✦</span>
-                      Exams (คลังข้อสอบ)
+                      Exams
                     </h3>
                     <p className="text-neutral-600 dark:text-white/90 text-lg leading-relaxed mb-2">
-                      รวบรวมข้อสอบเก่าจากหลากหลายสนามสอบ ไม่ว่าจะเป็น สอวน. TCAS A-Level และข้อสอบเข้ามหาวิทยาลัยชั้นนำต่างๆ เพื่อเป็นแหล่งความรู้อันมีค่าและช่วยให้ผู้เรียนได้ฝึกฝน ทบทวนความรู้ เพื่อเตรียมความพร้อมสำหรับการสอบอย่างมีประสิทธิภาพสูงสุด
+                      รวบรวมข้อสอบเก่าจากหลากหลายสนามสอบเช่น ข้อสอบสอวน. หรือข้อสอบเข้ามหาวิทยาลัยชั้นนำต่างๆ เพื่อเป็นเเหล่งฝึกฝน ทบทวนความรู้ของพี่ๆเพื่อนๆน้องๆทุกคน สำหรับการเตรียมความพร้อมก่อนสอบสนามต่างๆ
                     </p>
                     <button
                       onClick={() => setCurrentView("exams")}
@@ -403,7 +326,7 @@ export default function App() {
                         <li>A-LEVEL</li>
                         <li>TGAT</li>
                         <li>TPAT</li>
-                        <li>สอวน.</li>
+                        <li>สอวน</li>
                         <li>IJSO</li>
                         <li>POSN</li>
                         <li>TCAS</li>
@@ -411,7 +334,7 @@ export default function App() {
                         <li>A-LEVEL</li>
                         <li>TGAT</li>
                         <li>TPAT</li>
-                        <li>สอวน.</li>
+                        <li>สอวน</li>
                         <li>IJSO</li>
                         {/* Duplicated for seamless looping */}
                         <li aria-hidden="true">POSN</li>
@@ -420,7 +343,7 @@ export default function App() {
                         <li aria-hidden="true">A-LEVEL</li>
                         <li aria-hidden="true">TGAT</li>
                         <li aria-hidden="true">TPAT</li>
-                        <li aria-hidden="true">สอวน.</li>
+                        <li aria-hidden="true">สอวน</li>
                         <li aria-hidden="true">IJSO</li>
                         <li aria-hidden="true">POSN</li>
                         <li aria-hidden="true">TCAS</li>
@@ -428,7 +351,7 @@ export default function App() {
                         <li aria-hidden="true">A-LEVEL</li>
                         <li aria-hidden="true">TGAT</li>
                         <li aria-hidden="true">TPAT</li>
-                        <li aria-hidden="true">สอวน.</li>
+                        <li aria-hidden="true">สอวน</li>
                         <li aria-hidden="true">IJSO</li>
                       </ul>
                     </div>
@@ -437,10 +360,10 @@ export default function App() {
                   <div className="flex flex-col gap-3">
                     <h3 className="text-2xl font-bold flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm">
                       <span className="inline-block text-red-500 drop-shadow-md text-3xl font-normal -rotate-12 transform" style={{ WebkitTextFillColor: '#ef4444' }}>✦</span>
-                      Portfolio & University (แฟ้มสะสมผลงานและมหาวิทยาลัย)
+                      Portfolio & University
                     </h3>
                     <p className="text-neutral-600 dark:text-white/90 text-lg leading-relaxed mb-2">
-                      พื้นที่จัดเก็บและนำเสนอผลงาน กิจกรรม และโครงงานวิทยาศาสตร์ต่างๆ ของนักเรียน เพื่อแบ่งปันไอเดีย ความสำเร็จ เป็นแนวทางในการจัดทำแฟ้มสะสมผลงาน พร้อมทั้งข้อมูล เเละรายละเอียดของคณะและมหาวิทยาลัยต่างๆ เพื่อสร้างแรงบันดาลใจในการศึกษาต่อ ช่วยประกอบการตัดสินใจ และเตรียมความพร้อมเพื่อก้าวเข้าสู่รั้วมหาวิทยาลัยในฝันอย่างมั่นใจ
+                      รวบรวมเเฟ้มสะสมผลงานของพี่ๆที่จบไปเเล้ว เพื่อเเบ่งปันไอเดีย หรือข้อมูลต่างๆ เป็นเเนวทางในการยื่นรอบพอร์ต พร้อมทั้งรายละเอียดการรับนักศึกษาของมหาวิทยาลัยในสาขาต่างๆเป็นการประกอบการตัดสินใจ เพื่อเตรียมความพร้อมของน้องๆในการเข้าสู่มหาวิทยาลัยในฝันอย่างมั่นใจ
                     </p>
                     <button
                       onClick={() => setCurrentView("portfolio")}
@@ -461,30 +384,42 @@ export default function App() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="max-w-3xl mx-auto py-12 px-4 sm:px-0 flex flex-col gap-8 w-full"
+              className="max-w-3xl mx-auto py-20 px-4 sm:px-0 flex flex-col items-center justify-center text-center gap-12 w-full min-h-[60vh] relative z-10"
             >
-               <h2 className="text-3xl font-semibold text-neutral-900 dark:text-neutral-300 tracking-tight transition-colors">
-                 About Me
-               </h2>
-               <div className="prose prose-neutral dark:prose-invert max-w-none text-neutral-700 dark:text-neutral-400 transition-colors">
-                 <p className="text-lg">ok doraymifasol</p>
-                 <div className="my-8 flex gap-4">
-                   <img
-                     src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80"
-                     alt="Library"
-                     className="rounded-xl w-1/2 object-cover"
-                   />
-                   <img
-                     src="https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=400&q=80"
-                     alt="Books"
-                     className="rounded-xl w-1/2 object-cover"
-                   />
-                 </div>
-                 <h3>Mission</h3>
-                 <p>skibidi skibidi</p>
-                 <h3>Contact</h3>
-                 <p>tornado tornado</p>
-               </div>
+              <div className="flex flex-col gap-2 items-center">
+                <span className="inline-block text-red-500 drop-shadow-md text-3xl md:text-5xl mb-4 font-normal -rotate-12 transform" style={{ WebkitTextFillColor: '#ef4444' }}>✦</span>
+                <h2 className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neutral-900 to-neutral-500 dark:from-white dark:to-neutral-500 tracking-tight transition-colors">
+                  We Are Oripius Academic Team
+                </h2>
+                <h3 className="text-xl md:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 drop-shadow-sm mt-2">
+                  by SMD Leadership 44
+                </h3>
+              </div>
+
+              <div className="max-w-2xl w-full text-neutral-600 dark:text-neutral-300 text-lg md:text-xl leading-relaxed flex flex-col gap-6 text-left">
+                <p>
+                  พวกเราพร้อมที่จะช่วยทุกๆคน สำหรับการเตรียมความพร้อม
+                  <br className="hidden sm:block" />
+                  การสอบในสนามต่างๆ เเละการศึกษาต่อในระดับอุดมศึกษา
+                </p>
+                <p>
+                  เพราะพวกเราเชื่อว่าปลายทางจุดหมายไม่ได้ยากอย่างที่คิด
+                  <br className="hidden sm:block" />
+                  หากมีเข็มทิศนำทางที่ดี พวกเราพร้อมที่จะเป็นเข็มทิศให้ทุกๆคน
+                </p>
+                <div className="w-full text-center mt-6">
+                  <p className="font-semibold text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 relative inline-block">
+                    จุดหมายที่ดูไกล มันจะใกล
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-start gap-6 mt-8 pt-10 border-t border-neutral-200/50 dark:border-neutral-800/50 w-full text-left">
+                <h3 className="text-xl font-bold text-neutral-900 dark:text-white">Contact Us</h3>
+                <div className="w-full text-left text-neutral-600 dark:text-neutral-400">
+                  สามารถรายงานปัญหา ข้อเสนอหรือสิ่งที่อยากให้ทำได้ที่นี้ <a href="#" className="text-red-500 hover:underline font-medium">Feedback</a>
+                </div>
+              </div>
             </motion.section>
           )}
 
@@ -506,7 +441,7 @@ export default function App() {
                   </span>
                 </h2>
                 <p className="text-md text-neutral-600 dark:text-white/90 max-w-xl transition-colors">
-                  รวบรวมช่องทางดาวน์โหลดและติวข้อสอบจากผู้ออกข้อสอบจริงและแหล่งแนวข้อสอบชั้นนำ เพื่อการเตรียมความพร้อมอย่างไร้ขีดจำกัด
+                  รวบรวมช่องทางดาวน์โหลดหรือที่มาสำหรับข้อสอบต่างๆ ไม่ว่าจะเป็นจากผู้ออกข้อสอบโดยตรง หรือ Mock-test จากติวเตอร์สถาบันต่างๆ ครอบคลุมหลากหลายวิชาสำหรับน้องๆทุกคน
                 </p>
               </div>
 
@@ -794,7 +729,7 @@ export default function App() {
                 </h2>
                 <div className="h-1 w-12 bg-red-500 mx-auto rounded-full mb-4" />
                 <p className="text-neutral-600 dark:text-white/90 max-w-xl mx-auto transition-colors">
-                  รวบรวมเล่มผลงานสะสม (Portfolio) ที่ผ่านการคัดเลือกเข้าศึกษาจริงในมหาวิทยาลัยต่างๆ เพื่อเป็นประทีปส่องทางและแรงบันดาลใจแด่น้องๆ รุ่นต่อไป
+                  รวบรวมลิ้งก์เเฟ้มสะสมผลงานของพี่ๆในปีต่างๆ ในหลากหลายสาขาเเละมหาวิทยาลัย
                 </p>
               </div>
 
@@ -971,14 +906,14 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t border-neutral-200/50 dark:border-neutral-900 bg-transparent py-6 mt-auto transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <div className="text-neutral-500 dark:text-neutral-400 p-1 flex items-center justify-center transition-colors">
               <Copyright size={18} strokeWidth={2} />
             </div>
-            <p className="text-neutral-500 dark:text-neutral-400 text-sm transition-colors flex items-center gap-3">
-              <span>เว็บไซต์รวมข้อสอบของพรรค uunknown</span>
+            <p className="text-neutral-500 dark:text-neutral-400 text-xs sm:text-sm transition-colors flex items-center gap-2 sm:gap-3">
+              <span className="truncate">เว็บไซต์ฝ่ายวิชาการของพรรค Oripius</span>
               <span className="text-neutral-300 dark:text-neutral-700">|</span>
-              <a href="#" className="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors">
+              <a href="#" className="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors whitespace-nowrap">
                 Feedback
               </a>
               <span className="text-neutral-300 dark:text-neutral-700">|</span>
