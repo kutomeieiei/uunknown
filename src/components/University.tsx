@@ -118,8 +118,6 @@ export function University() {
 
         {/* Hero Banner section */}
         <div className="py-6 flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 relative overflow-hidden">
-          {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-red-500/5 via-orange-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
 
           {selectedUni.logoUrl ? (
             <div className="w-24 h-24 sm:w-32 sm:h-32 bg-white dark:bg-neutral-950 rounded-2xl p-3 shadow-sm border border-neutral-200/40 dark:border-neutral-800/40 flex items-center justify-center shrink-0">

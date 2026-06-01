@@ -24,6 +24,7 @@ import {
   Copyright,
   Instagram,
 } from "lucide-react";
+import oripiusIcon from "./assets/icons/oripius.png";
 import { mockArchives } from "./data/mockArchives";
 import { externalLinks } from "./data/externalLinks";
 import { portfolioLinks } from "./data/portfolioLinks";
@@ -215,10 +216,6 @@ export default function App() {
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background Decorative Elements */}
       <div className="fixed inset-0 z-[-1] pointer-events-none select-none flex justify-center">
-        {/* Edge Glows */}
-        <div className="absolute top-[10%] left-[-15%] w-[40%] h-[600px] bg-red-600/10 dark:bg-red-900/15 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-[10%] right-[-15%] w-[40%] h-[600px] bg-rose-600/10 dark:bg-rose-900/15 rounded-full blur-[120px]"></div>
-
         {/* Vertical Watermark Text (Visible on wide screens) */}
       </div>
 
@@ -228,7 +225,7 @@ export default function App() {
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
-                <img src="https://cdn.discordapp.com/attachments/1455582752484229140/1506688504866930918/image.png?ex=6a0f2c84&is=6a0ddb04&hm=053e95d76d2f01b0c77bd120a34d5bdd72892d8c364d462e937140bdf446356e&" alt="Profile" className="w-full h-full object-cover" /> 
+                <img src={oripiusIcon} alt="Profile" className="w-full h-full object-cover" /> 
               </div>
               <div className="flex flex-col">
                 <h1 className="font-bold text-2xl leading-none text-neutral-900 dark:text-neutral-100 transition-colors">
