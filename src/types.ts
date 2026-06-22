@@ -12,11 +12,10 @@ export interface ExternalLinkItem {
 
 export interface PortfolioItem {
   id: string;
-  title: string;
-  description: string;
   url: string;
   tags: string[];
   ownerName?: string;
+  ownerFullName?: string;
   targetFacultyAndUni?: string;
   coverImageUrl?: string;
 }

@@ -76,9 +76,8 @@ export default function App() {
     const matchesSearch =
       portfolioSearch === "" ||
       (link.ownerName && link.ownerName.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
-      (link.title && link.title.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
+      (link.ownerFullName && link.ownerFullName.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
       (link.targetFacultyAndUni && link.targetFacultyAndUni.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
-      (link.description && link.description.toLowerCase().includes(portfolioSearch.toLowerCase())) ||
       link.tags.some(tag => tag.toLowerCase().includes(portfolioSearch.toLowerCase()));
 
     const matchesTag =
@@ -777,7 +776,7 @@ export default function App() {
                                   }&sz=w800`
                                 : link.coverImageUrl
                             }
-                            alt={`${link.ownerName || link.title} portfolio cover`}
+                            alt={`${link.ownerName || "Portfolio"} cover`}
                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                             referrerPolicy="no-referrer"
                             onError={(e) => {
@@ -822,9 +821,14 @@ export default function App() {
                             <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white drop-shadow-md line-clamp-1">
                               {link.ownerName || "ชื่อเจ้าของผลงาน"}
                             </h3>
+                            {link.ownerFullName && (
+                              <p className="text-xs sm:text-sm font-medium text-neutral-200 drop-shadow-md line-clamp-1">
+                                {link.ownerFullName}
+                              </p>
+                            )}
                             {/* Line 2: Faculty and University */}
-                            <p className="text-[10px] sm:text-xs font-medium text-neutral-300 drop-shadow-md leading-relaxed line-clamp-2">
-                              {link.targetFacultyAndUni || link.description}
+                            <p className="text-[10px] sm:text-xs font-medium text-neutral-400 drop-shadow-md leading-relaxed line-clamp-2 mt-0.5">
+                              {link.targetFacultyAndUni}
                             </p>
                           </div>
 
