@@ -3,22 +3,22 @@ import { PortfolioItem } from '../types';
 export const portfolioLinks: PortfolioItem[] = [
   {
     id: "1",
-    title: "Computer Engineering Portfolio",
-    description: "ผลงานที่เกี่ยวข้องกับการเขียนโปรแกรม หุ่นยนต์ และโครงงานวิทยาศาสตร์",
-    url: "https://example.com/portfolio-1",
-    tags: ["Tech", "Programming"],
-    ownerName: "พี่เตๆ",
-    targetFacultyAndUni: "คณะวิศวกรรมศาสตร์ สาขาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยเกษตรศาสตร์",
-    coverImageUrl: "https://cdn.discordapp.com/attachments/930051167029956661/1511016200501465158/noimage.png?ex=6a1eeaff&is=6a1d997f&hm=645ce83784d87740ab8a95499be762d57e7b9b61689e33f1f48ae00a27efcf8a&"
+    title: "",
+    description: "",
+    url: "https://drive.google.com/file/d/1etpvTP0KVM0U1Fy21otzrYJWTBnKw6ND/view?usp=drive_link",
+    tags: ["Medical"],
+    ownerName: "พี่ภัทร",
+    targetFacultyAndUni: "คณะแพทยศาสตร์ มหาวิทยาลัยขอนแก่น",
+    coverImageUrl: "https://drive.google.com/file/d/1ADd-6toqJqr9tkjoDMH-Q104SWaQaSvN/view?usp=drive_link"
   },
   {
     id: "2",
-    title: "Science & Biology Projects",
-    description: "รวมโครงงานวิทยาศาสตร์และชีววิทยาที่เคยเข้าร่วมแข่งขัน",
-    url: "https://example.com/portfolio-2",
-    tags: ["Science", "Biology"],
-    ownerName: "พี่เตๆ",
-    targetFacultyAndUni: "คณะวิทยาศาสตร์ สาขาชีวเคมี มหาวิทยาลัยมหิดล",
-    coverImageUrl: "https://cdn.discordapp.com/attachments/930051167029956661/1511016200501465158/noimage.png?ex=6a1eeaff&is=6a1d997f&hm=645ce83784d87740ab8a95499be762d57e7b9b61689e33f1f48ae00a27efcf8a&"
+    title: "",
+    description: "",
+    url: "https://drive.google.com/file/d/16p0SNkuMJorZ_KAMCwi-ZK7OT_4v2rO_/view?usp=drive_link",
+    tags: ["Dentistry"],
+    ownerName: "พี่ไซเเอม",
+    targetFacultyAndUni: "คณะทันตแพทยศาสตร์ มหาวิทยาลัยขอนแก่น",
+    coverImageUrl: "https://drive.google.com/file/d/1-jkxLBYyhrJx2rp0S98OF68k4Epy2Giy/view?usp=drive_link"
   }
 ];

@@ -770,11 +770,31 @@ export default function App() {
                         {/* Portfolio Cover Image */}
                         {link.coverImageUrl && (
                           <img
-                            src={link.coverImageUrl}
+                            src={
+                              link.coverImageUrl.match(/\/d\/([a-zA-Z0-9_-]+)/)
+                                ? `https://drive.google.com/thumbnail?id=${
+                                    link.coverImageUrl.match(/\/d\/([a-zA-Z0-9_-]+)/)?.[1]
+                                  }&sz=w800`
+                                : link.coverImageUrl
+                            }
                             alt={`${link.ownerName || link.title} portfolio cover`}
                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                            referrerPolicy="no-referrer"
                             onError={(e) => {
-                              e.currentTarget.style.display = 'none';
+                              // Fallback if image fails to load
+                              const target = e.currentTarget as HTMLImageElement;
+                              if (!target.dataset.failed) {
+                                target.dataset.failed = "true";
+                                // If it's a drive URL, fallback to uc?export=view just in case
+                                const match = link.coverImageUrl?.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                                if (match && match[1]) {
+                                  target.src = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                                } else {
+                                  target.style.display = 'none';
+                                }
+                              } else {
+                                target.style.display = 'none';
+                              }
                             }}
                           />
                         )}
