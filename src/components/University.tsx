@@ -44,50 +44,7 @@ export function University() {
         { facultyName: "วิศวกรรมศาสตร์", scoreCriteria: ["TGAT", "TPAT3", "A-Level คณิตศาสตร์ประยุกต์ 1", "A-Level ฟิสิกส์", "A-Level เคมี"] },
         { facultyName: "อักษรศาสตร์", scoreCriteria: ["TGAT", "A-Level ภาษาไทย", "A-Level สังคมศึกษา", "A-Level ภาษาต่างประเทศ"] }
       ]
-    },
-    {
-      id: "2",
-      name: "Kasetsart University",
-      nameThai: "มหาวิทยาลัยเกษตรศาสตร์",
-      url: "https://www.ku.ac.th/",
-      icon: <BookOpen size={32} />,
-      logoUrl: "", 
-      color:
-        "text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/50 bg-emerald-100 dark:bg-emerald-950/40",
-      description: "มหาวิทยาลัยเกษตรศาสตร์ เป็นมหาวิทยาลัยของรัฐที่โดดเด่นด้านการเกษตร วิทยาศาสตร์ และเทคโนโลยี รวมไปถึงสาขาวิชาอื่นๆ สร้างบัณฑิตที่มีคุณภาพเพื่อตอบสนองการพัฒนาประเทศ",
-      location: "กรุงเทพมหานคร",
-      admissionMethods: [
-        { name: "TCAS รอบ 1 Portfolio", description: "โครงการเรียนดี โครงการผู้มีความสามารถพิเศษระดับชาติ ส่งแฟ้มสะสมผลงาน" },
-        { name: "TCAS รอบ 2 Quota", description: "โควตานักเรียนในเขตพื้นที่ โควตาโรงเรียนเครือข่าย" },
-        { name: "TCAS รอบ 3 Admission", description: "การรับสมัครร่วมกันโดยใช้คะแนน TGAT/TPAT, A-Level ตามเกณฑ์" }
-      ],
-      faculties: [
-        { facultyName: "วิทยาศาสตร์", scoreCriteria: ["TGAT", "A-Level คณิตศาสตร์ประยุกต์ 1", "A-Level วิทยาศาสตร์ประยุกต์"] },
-        { facultyName: "บริหารธุรกิจ", scoreCriteria: ["TGAT", "A-Level คณิตศาสตร์ประยุกต์ 1 หรือ 2"] }
-      ]
-    },
-    {
-      id: "3",
-      name: "King Mongkut's Institute of Technology Ladkrabang",
-      nameThai: "สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",
-      url: "https://www.kmitl.ac.th/",
-      icon: <GraduationCap size={32} />,
-      logoUrl: "", 
-      color:
-        "text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-900/50 bg-orange-100 dark:bg-orange-950/40",
-      description: "สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง สถาบันการศึกษาชั้นนำที่มีชื่อเสียงด้านวิศวกรรมศาสตร์ สถาปัตยกรรมศาสตร์ และวิทยาศาสตร์ประยุกต์ เน้นการสร้างสรรค์นวัตกรรม",
-      location: "กรุงเทพมหานคร",
-      admissionMethods: [
-        { name: "TCAS รอบ 1 Portfolio", description: "เปิดรับนักเรียนที่มีผลงานโดดเด่นทางด้านวิชาการ วิศวกรรม และนวัตกรรม" },
-        { name: "TCAS รอบ 2 Quota", description: "โควตานักเรียนสายสามัญ โควตาโรงเรียนเครือข่าย" },
-        { name: "TCAS รอบ 3 Admission", description: "ใช้คะแนนสอบส่วนกลาง TGAT/TPAT และ A-Level ตามทีกำหนด" },
-        { name: "TCAS รอบ 4 Direct Admission", description: "รับสมัครตรงโดยมหาวิทยาลัย (เปิดบางคณะ/สาขาที่ยังไม่เต็ม)" }
-      ],
-      faculties: [
-        { facultyName: "วิศวกรรมศาสตร์", scoreCriteria: ["TGAT", "TPAT3", "A-Level คณิตศาสตร์ประยุกต์ 1", "A-Level ฟิสิกส์"] },
-        { facultyName: "สถาปัตยกรรมศาสตร์", scoreCriteria: ["TGAT", "TPAT4"] }
-      ]
-    },
+    }
   ];
 
   const filteredUnis = unis.filter(uni => 
